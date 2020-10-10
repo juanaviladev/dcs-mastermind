@@ -24,7 +24,7 @@ public class Board {
         currentAttempts++;
     }
 
-    public boolean isSecretGuessed() {
+    public boolean isCodeBroken() {
         Result lastResult = this.results[this.currentAttempts - 1];
         return lastResult.isWinner();
     }
