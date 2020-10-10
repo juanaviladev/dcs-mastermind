@@ -23,7 +23,7 @@ public class Result {
 
     public void print() {
         proposed.print();
-        System.out.println(" --> ");
+        System.out.print(" --> ");
         System.out.println(blacks + " blacks and " + whites + " whites");
     }
 }
