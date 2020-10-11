@@ -10,23 +10,15 @@ public class Mastermind {
 
     private void newGame() {
         this.board = new Board(MAX_ATTEMPTS);
-
-        Player maker = new RandomMakerPlayer(board);
-        Player breaker = new HumanBreakerPlayer(board);
-
-        maker.play();
-        this.board.print();
+        Turn turn = new Turn(this.board);
 
         do {
-            breaker.play();
+            turn.play();
             this.board.print();
         }
         while(!this.isGameOver());
 
-        if(board.isCodeBroken())
-            breaker.announceWin();
-        else
-            maker.announceWin();
+        turn.winner().announceWin();
     }
 
     private void start() {

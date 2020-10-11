@@ -26,12 +26,13 @@ public class CombinationPickerDialog {
         Color[] chosenColors = new Color[Combination.ACCEPTED_LENGTH];
 
         int i = 0;
-        Color chosen = Color.from(colors.charAt(i));
-        while (i < Combination.ACCEPTED_LENGTH && !chosen.isNull()) {
-            chosenColors[i] = chosen;
+        Color chosen;
+        do {
             chosen = Color.from(colors.charAt(i));
+            chosenColors[i] = chosen;
             i++;
         }
+        while(i < Combination.ACCEPTED_LENGTH && !chosen.isNull());
 
         if (chosen.isNull()) {
             chosenColors = NULL_ARRAY;

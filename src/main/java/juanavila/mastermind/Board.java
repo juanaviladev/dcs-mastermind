@@ -25,6 +25,9 @@ public class Board {
     }
 
     public boolean isCodeBroken() {
+        if(currentAttempts == 0)
+            return false;
+        
         Result lastResult = this.results[this.currentAttempts - 1];
         return lastResult.isWinner();
     }
