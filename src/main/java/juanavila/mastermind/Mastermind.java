@@ -41,7 +41,7 @@ public class Mastermind {
     }
 
     private boolean isGameOver() {
-        return !board.isCodeBroken() && !board.isMaxAttemptsReached();
+        return board.isCodeBroken() || board.isMaxAttemptsReached();
     }
 
     public static void main(String[] args) {
