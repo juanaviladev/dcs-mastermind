@@ -29,7 +29,7 @@ public enum Color {
         return possibleValues[random.nextInt(possibleValues.length)];
     }
 
-    public static String possibleValues() {
+    public static String palette() {
         String colors = "";
         for(Color color : Color.values()) {
             colors += color.letter;

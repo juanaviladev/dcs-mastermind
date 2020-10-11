@@ -12,13 +12,13 @@ public class HumanBreakerPlayer implements Player {
 
     public void play() {
         String colors = Console.instance().readString(Message.COMBINATION_PROPOSAL.toString());
-        Color[] validColors;
+        Color[] chosenColors;
         do {
-            validColors = parseColors(colors);
+            chosenColors = parseColors(colors);
         }
-        while (validColors.length != Combination.ACCEPTED_LENGTH);
+        while (chosenColors.length != Combination.ACCEPTED_LENGTH);
 
-        ProposedCombination combination = new ProposedCombination(validColors);
+        ProposedCombination combination = new ProposedCombination(chosenColors);
         board.proposeCombination(combination);
     }
 
@@ -35,7 +35,7 @@ public class HumanBreakerPlayer implements Player {
 
         if (chosen.isNull()) {
             position = new Color[0];
-            Console.instance().writelnError(Error.WRONG_COLORS.toString(),Color.possibleValues());
+            Console.instance().writelnError(Error.WRONG_COLORS.toString(),Color.palette());
         }
 
         return position;
