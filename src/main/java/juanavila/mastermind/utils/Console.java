@@ -24,13 +24,13 @@ public class Console {
     }
 
     public void writeError(String message, Object... params) {
-        System.err.printf(message, params);
-        System.err.println();
+        System.out.printf("ERROR: "+message, params);
+        System.out.println();
     }
 
     public void writelnError(String message, Object... params) {
-        System.err.printf(message, params);
-        System.err.println();
+        System.out.printf("ERROR: "+message, params);
+        System.out.println();
     }
 
     public String readString() {
