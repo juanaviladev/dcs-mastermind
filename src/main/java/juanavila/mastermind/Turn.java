@@ -26,9 +26,9 @@ public class Turn {
     }
 
     public Player winner() {
-        if(board.isCodeBroken())
+        if(board.isWinner())
             return breaker;
-        else if(board.isMaxAttemptsReached())
+        else if(board.isLooser())
             return maker;
         else
             return null;

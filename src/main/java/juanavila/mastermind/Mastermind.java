@@ -33,7 +33,7 @@ public class Mastermind {
     }
 
     private boolean isGameOver() {
-        return board.isCodeBroken() || board.isMaxAttemptsReached();
+        return board.isWinner() || board.isLooser();
     }
 
     public static void main(String[] args) {

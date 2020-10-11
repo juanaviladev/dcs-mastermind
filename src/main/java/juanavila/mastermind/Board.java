@@ -24,15 +24,15 @@ public class Board {
         currentAttempts++;
     }
 
-    public boolean isCodeBroken() {
+    public boolean isWinner() {
         if(currentAttempts == 0)
             return false;
-        
+
         Result lastResult = this.results[this.currentAttempts - 1];
         return lastResult.isWinner();
     }
 
-    public boolean isMaxAttemptsReached() {
+    public boolean isLooser() {
         return currentAttempts == MAX_ATTEMPTS;
     }
 
