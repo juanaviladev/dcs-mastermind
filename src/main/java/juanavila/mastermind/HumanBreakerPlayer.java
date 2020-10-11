@@ -1,6 +1,6 @@
 package juanavila.mastermind;
 
-import java.util.Scanner;
+import juanavila.mastermind.utils.Console;
 
 public class HumanBreakerPlayer implements Player {
 
@@ -11,9 +11,8 @@ public class HumanBreakerPlayer implements Player {
     }
 
     public void play() {
-        Scanner sc = new Scanner(System.in);
         Message.COMBINATION_PROPOSAL.writeln();
-        String line = sc.nextLine();
+        String line = Console.instance().readString();
         Color[] position = new Color[4];
         for(int i = 0; i < position.length;i++) {
             position[i] = Color.from(line.charAt(i));

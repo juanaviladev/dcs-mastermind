@@ -1,6 +1,6 @@
 package juanavila.mastermind;
 
-import java.util.Scanner;
+import juanavila.mastermind.utils.Console;
 
 public class Mastermind {
 
@@ -38,9 +38,8 @@ public class Mastermind {
 
     private boolean isGameResumed() {
         Message.RESUME.writeln();
-        Scanner sc = new Scanner(System.in);
-        String response = sc.nextLine();
-        return response.equalsIgnoreCase("y");
+        char response = Console.instance().readChar();
+        return response == 'y';
     }
 
     private boolean isGameOver() {
