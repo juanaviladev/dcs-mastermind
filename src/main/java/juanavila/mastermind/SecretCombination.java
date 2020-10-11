@@ -39,7 +39,7 @@ public class SecretCombination extends Combination {
 
     void print() {
         for(int i = 0; i < positions.length; i++) {
-            Message.SECRET_POSITION.writeln();
+            Message.SECRET_POSITION.write();
         }
     }
 
