@@ -1,6 +1,5 @@
 package juanavila.mastermind;
 
-import juanavila.mastermind.utils.Console;
 import juanavila.mastermind.utils.YesNoDialog;
 
 public class Mastermind {
