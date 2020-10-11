@@ -1,6 +1,7 @@
 package juanavila.mastermind;
 
 import juanavila.mastermind.utils.Console;
+import juanavila.mastermind.utils.YesNoDialog;
 
 public class Mastermind {
 
@@ -37,9 +38,7 @@ public class Mastermind {
     }
 
     private boolean isGameResumed() {
-        Message.RESUME.writeln();
-        char response = Console.instance().readChar();
-        return response == 'y';
+        return new YesNoDialog().ask(Message.RESUME.toString());
     }
 
     private boolean isGameOver() {

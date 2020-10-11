@@ -7,7 +7,7 @@ public enum Message {
     SEPARATOR(" "),
     COMBINATION_PROPOSAL("Propose a combination: "),
     ATTEMPTS("%d attempt(s): "),
-    RESUME("RESUME? (y/n): "),
+    RESUME("RESUME? "),
     RESULT("%s ---> %d blacks and %d whites"),
     MAKER_WIN("You've lost!!! :-("),
     BREAKER_WIN("You've won!!! ;-)"),
