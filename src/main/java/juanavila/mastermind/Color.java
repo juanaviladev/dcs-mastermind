@@ -32,7 +32,9 @@ public enum Color {
     public static String palette() {
         String colors = "";
         for(Color color : Color.values()) {
-            colors += color.letter;
+            if(!color.isNull()) {
+                colors += color.letter;
+            }
         }
         return colors;
     }
@@ -44,7 +46,7 @@ public enum Color {
     public static Color from(char value) {
         String valueText = value + "";
         for(Color color : Color.values()) {
-            if(color.letter.equals(valueText))
+            if(valueText.equals(color.letter))
                 return color;
         }
         return Color.NULL;
