@@ -24,8 +24,8 @@ public class CombinationPickerDialog {
         }
 
         Color[] chosenColors = new Color[Combination.ACCEPTED_LENGTH];
-        int i = 0;
 
+        int i = 0;
         Color chosen = Color.from(colors.charAt(i));
         while (i < Combination.ACCEPTED_LENGTH && !chosen.isNull()) {
             chosenColors[i] = chosen;

@@ -11,6 +11,7 @@ public enum Message {
     MAKER_WIN("You've lost!!! :-("),
     BREAKER_WIN("You've won!!! ;-)"),
     SECRET_POSITION("x"),
+    SEPARATOR(""),
     NULL_MESSAGE();
 
     private String message;

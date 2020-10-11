@@ -61,8 +61,4 @@ public class Console {
 
         return read;
     }
-
-    public void newLine() {
-        System.out.println();
-    }
 }
