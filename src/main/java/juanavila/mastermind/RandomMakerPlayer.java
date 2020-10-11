@@ -9,7 +9,7 @@ public class RandomMakerPlayer implements Player {
     }
 
     public void play() {
-        Color[] positions = new Color[4];
+        Color[] positions = new Color[Combination.ACCEPTED_LENGTH];
 
         for(int i = 0; i < positions.length; i++) {
             positions[i] = Color.random();

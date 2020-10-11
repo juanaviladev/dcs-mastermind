@@ -4,7 +4,12 @@ public abstract class Combination {
 
     protected final Color[] positions;
 
-    protected Combination(Color[] positions) {
+    static final int ACCEPTED_LENGTH = 4;
+
+    protected Combination(Color[] positions) throws IllegalArgumentException {
+        if(positions == null || positions.length != ACCEPTED_LENGTH)
+            throw new IllegalArgumentException(Error.WRONG_PROPOSAL_LENGTH.toString());
+
         this.positions = positions;
     }
 

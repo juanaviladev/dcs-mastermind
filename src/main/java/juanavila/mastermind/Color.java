@@ -29,6 +29,14 @@ public enum Color {
         return possibleValues[random.nextInt(possibleValues.length)];
     }
 
+    public static String possibleValues() {
+        String colors = "";
+        for(Color color : Color.values()) {
+            colors += color.letter;
+        }
+        return colors;
+    }
+
     public boolean isNull() {
         return this == Color.NULL;
     }

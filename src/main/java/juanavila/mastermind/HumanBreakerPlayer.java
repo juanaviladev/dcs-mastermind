@@ -11,15 +11,34 @@ public class HumanBreakerPlayer implements Player {
     }
 
     public void play() {
-        Message.COMBINATION_PROPOSAL.writeln();
-        String line = Console.instance().readString();
-        Color[] position = new Color[4];
-        for(int i = 0; i < position.length;i++) {
-            position[i] = Color.from(line.charAt(i));
+        String colors = Console.instance().readString(Message.COMBINATION_PROPOSAL.toString());
+        Color[] validColors;
+        do {
+            validColors = parseColors(colors);
+        }
+        while (validColors.length != Combination.ACCEPTED_LENGTH);
+
+        ProposedCombination combination = new ProposedCombination(validColors);
+        board.proposeCombination(combination);
+    }
+
+    private Color[] parseColors(String colors) {
+        Color[] position = new Color[Combination.ACCEPTED_LENGTH];
+        int i = 0;
+
+        Color chosen = Color.from(colors.charAt(i));
+        while (i < Combination.ACCEPTED_LENGTH && !chosen.isNull()) {
+            position[i] = chosen;
+            chosen = Color.from(colors.charAt(i));
+            i++;
         }
 
-        ProposedCombination combination = new ProposedCombination(position);
-        board.proposeCombination(combination);
+        if (chosen.isNull()) {
+            position = new Color[0];
+            Console.instance().writelnError(Error.WRONG_COLORS.toString(),Color.possibleValues());
+        }
+
+        return position;
     }
 
     public void announceWin() {

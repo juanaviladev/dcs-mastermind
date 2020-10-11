@@ -37,6 +37,11 @@ public class Console {
         return sc.nextLine();
     }
 
+    public String readString(String message) {
+        write(message);
+        return readString();
+    }
+
     public char readChar() {
         String inputText;
         boolean ok;
