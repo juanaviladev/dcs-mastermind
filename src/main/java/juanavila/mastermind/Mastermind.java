@@ -37,7 +37,7 @@ public class Mastermind {
     }
 
     private boolean isGameResumed() {
-        System.out.print("RESUME? (y/n): ");
+        Message.RESUME.writeln();
         Scanner sc = new Scanner(System.in);
         String response = sc.nextLine();
         return response.equalsIgnoreCase("y");

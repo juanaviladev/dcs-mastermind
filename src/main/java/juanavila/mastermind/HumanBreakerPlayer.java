@@ -12,7 +12,7 @@ public class HumanBreakerPlayer implements Player {
 
     public void play() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Propose a combination: ");
+        Message.COMBINATION_PROPOSAL.writeln();
         String line = sc.nextLine();
         Color[] position = new Color[4];
         for(int i = 0; i < position.length;i++) {
@@ -24,6 +24,6 @@ public class HumanBreakerPlayer implements Player {
     }
 
     public void announceWin() {
-        System.out.println("You've won!!! ;-)");
+        Message.BREAKER_WIN.writeln();
     }
 }

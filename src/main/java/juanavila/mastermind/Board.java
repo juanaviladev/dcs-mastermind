@@ -1,5 +1,7 @@
 package juanavila.mastermind;
 
+import juanavila.mastermind.utils.Console;
+
 public class Board {
 
     private final int MAX_ATTEMPTS;
@@ -34,12 +36,11 @@ public class Board {
     }
 
     public void print() {
-        System.out.println(currentAttempts + " attempt(s):");
+        Message.ATTEMPTS.writeln(currentAttempts);
         secretCombination.print();
-        System.out.println();
+        Console.instance().newLine();
         for (int i = 0; i < currentAttempts; i++) {
-            Result result = results[i];
-            result.print();
+            results[i].print();
         }
     }
 }

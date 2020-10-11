@@ -2,8 +2,6 @@ package juanavila.mastermind;
 
 public class SecretCombination extends Combination {
 
-    private static final String SECRET_POSITION = "x";
-
     public SecretCombination(Color[] positions) {
         super(positions);
     }
@@ -41,7 +39,7 @@ public class SecretCombination extends Combination {
 
     void print() {
         for(int i = 0; i < positions.length; i++) {
-            System.out.print(SECRET_POSITION);
+            Message.SECRET_POSITION.writeln();
         }
     }
 

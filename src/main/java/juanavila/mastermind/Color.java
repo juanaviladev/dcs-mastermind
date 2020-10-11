@@ -1,5 +1,9 @@
 package juanavila.mastermind;
 
+import juanavila.mastermind.utils.Console;
+
+import java.util.Random;
+
 public enum Color {
     RED("r"),
     BLUE("b"),
@@ -7,12 +11,22 @@ public enum Color {
     GREEN("g"),
     ORANGE("o"),
     PURPLE("p"),
-    NULL("");
+    NULL();
 
-    private final String letter;
+    private String letter;
+    private static final Random random = new Random();
 
     Color(String letter) {
         this.letter = letter;
+    }
+
+    Color() {
+
+    }
+
+    public static Color random() {
+        Color[] possibleValues = Color.values();
+        return possibleValues[random.nextInt(possibleValues.length)];
     }
 
     public boolean isNull() {
@@ -29,6 +43,6 @@ public enum Color {
     }
 
     public void print() {
-        System.out.print(this.letter);
+        Console.instance().write(this.letter);
     }
 }

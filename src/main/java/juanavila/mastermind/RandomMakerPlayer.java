@@ -1,7 +1,5 @@
 package juanavila.mastermind;
 
-import java.util.Random;
-
 public class RandomMakerPlayer implements Player {
 
     private Board board;
@@ -11,21 +9,16 @@ public class RandomMakerPlayer implements Player {
     }
 
     public void play() {
-        Random random = new Random();
-
-        Color[] availableColors = Color.values();
         Color[] positions = new Color[4];
 
         for(int i = 0; i < positions.length; i++) {
-            int colorIndex = random.nextInt(availableColors.length);
-            positions[i] = availableColors[colorIndex];
+            positions[i] = Color.random();
         }
 
-        SecretCombination combination = new SecretCombination(positions);
-        board.putSecretCombination(combination);
+        board.putSecretCombination(new SecretCombination(positions));
     }
 
     public void announceWin() {
-        System.out.println("You've lost!!! :-(");
+        Message.MAKER_WIN.writeln();
     }
 }
