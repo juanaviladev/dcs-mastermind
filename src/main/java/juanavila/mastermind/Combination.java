@@ -6,7 +6,7 @@ public abstract class Combination {
 
     static final int ACCEPTED_LENGTH = 4;
 
-    protected Combination(Color[] positions) throws IllegalArgumentException {
+    protected Combination(Color[] positions) {
         if(positions == null || positions.length != ACCEPTED_LENGTH)
             throw new IllegalArgumentException(Error.WRONG_PROPOSAL_LENGTH.toString());
 
