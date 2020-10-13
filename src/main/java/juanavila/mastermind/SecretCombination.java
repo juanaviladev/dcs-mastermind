@@ -1,46 +1,47 @@
 package juanavila.mastermind;
 
-public class SecretCombination extends Combination {
+import java.util.Random;
 
-    public SecretCombination(Color[] positions) {
-        super(positions);
-    }
+import juanavila.utils.Console;
 
-    Result compareWith(ProposedCombination other) {
-        int blacks = countBlacks(other);
-        int whites = countBlackAndWhites(other) - blacks;
+import java.util.Collections;
 
-        return new Result(blacks, whites, this, other);
-    }
+class SecretCombination extends Combination {
 
-    private int countBlacks(ProposedCombination other) {
-        int blacks = 0;
+	SecretCombination() {
+		super();
+		for(int i=0; i<Color.length(); i++) {
+			this.colors.add(Color.get(i));
+		}
+		Random random = new Random(System.currentTimeMillis());
+		for (int i = 0; i < Color.length() - Result.WIDTH; i++) {
+			this.colors.remove(random.nextInt(this.colors.size()));
+		}
+		Collections.shuffle(this.colors);
+	}
 
-        for(int i = 0; i < positions.length; i++) {
-            if(this.positions[i] == other.positions[i])
-                blacks++;
-        }
+	Result getResult(ProposedCombination proposedCombination) {
+		int blacks = 0;
+		for (int i = 0; i < this.colors.size(); i++) {
+			if (proposedCombination.contains(this.colors.get(i), i)) {
+				blacks++;
+			}
+		}
+		int whites = 0;
+		for (Color color : this.colors) {
+			if (proposedCombination.contains(color)) {
+				whites++;
+			}
+		}
+		return new Result(blacks, whites - blacks);
+	}
 
-        return blacks;
-    }
-
-    private int countBlackAndWhites(ProposedCombination other) {
-        int blacksAndWhites = 0;
-
-        for (Color position : positions) {
-            for (int j = 0; j < positions.length; j++) {
-                if (position == other.positions[j])
-                    blacksAndWhites++;
-            }
-        }
-
-        return blacksAndWhites;
-    }
-
-    void print() {
-        for(int i = 0; i < positions.length; i++) {
-            Message.SECRET_POSITION.write();
-        }
-    }
+	void writeln() {
+		Console.instance().write("**** - ");
+		for (Color color : this.colors) {
+			color.write();
+		}
+		Console.instance().writeln();
+	}
 
 }

@@ -1,39 +1,41 @@
 package juanavila.mastermind;
 
-import juanavila.mastermind.utils.Console;
+import juanavila.utils.Console;
 
-public enum Message {
-    TITTLE("--- MASTERMIND ---"),
-    COMBINATION_PROPOSAL("Propose a combination: "),
-    ATTEMPTS("%d attempt(s): "),
-    RESUME("RESUME? "),
-    RESULT(" ---> %d blacks and %d whites"),
-    MAKER_WIN("You've lost!!! :-("),
-    BREAKER_WIN("You've won!!! ;-)"),
-    SECRET_POSITION("x"),
-    SEPARATOR(""),
-    NULL_MESSAGE();
+enum Message {
+	ATTEMPTS("#attempts attempt(s): "), 
+	SECRET("*"), 
+	RESUME("Do you want to continue"), 
+	RESULT(" --> #blacks blacks and #whites whites"), 
+	PROPOSED_COMBINATION("Propose a combination: "), 
+	TITLE("----- MASTERMIND -----"), 
+	WINNER("You've won!!! ;-)"), 
+	LOOSER("You've lost!!! :-(");
 
-    private String message;
+	private String message;
+	
+	private Message(String message) {
+		this.message = message;
+	}
 
-    Message() {
+	void write() {
+		Console.instance().write(this.message);
+	}
 
-    }
+	void writeln() {
+		Console.instance().writeln(this.message);
+	}
 
-    Message(String message) {
-        this.message = message;
-    }
+	void writeln(int attempts) {
+		assert this == Message.ATTEMPTS;
 
-    void write(Object... params) {
-        Console.instance().write(this.message, params);
-    }
+		Console.instance().writeln(this.message.replaceAll("#attempts", "" + attempts));
+	}
 
-    void writeln(Object... params) {
-        Console.instance().writeln(this.message,params);
-    }
+	void writeln(int blacks, int whites) {
+		assert this == Message.RESULT;
 
-    @Override
-    public String toString() {
-        return this.message;
-    }
+		Console.instance().writeln(this.message.replaceFirst("#blacks", "" + blacks).replaceFirst("#whites", "" + whites));
+	}
+
 }

@@ -1,47 +1,48 @@
 package juanavila.mastermind;
 
+import juanavila.utils.Console;
+
 public class Board {
 
-    private final int MAX_ATTEMPTS;
-    private int currentAttempts;
-    private SecretCombination secretCombination;
+  private static final int MAX_ATTEMPS = 10;
+  private SecretCombination secretCombination;
+  private ProposedCombination[] proposedCombinations;
+  private Result[] results;
+  private int attempts;
 
-    private Result[] results;
+  Board() {
+    this.secretCombination = new SecretCombination();
+    this.proposedCombinations = new ProposedCombination[Board.MAX_ATTEMPS];
+    this.results = new Result[Board.MAX_ATTEMPS];
+    this.attempts = 0;
+  }
 
-    public Board(int maxAttempts) {
-        this.MAX_ATTEMPTS = maxAttempts;
-        this.currentAttempts = 0;
-        this.results = new Result[maxAttempts];
+  public void writeln() {
+    Console.instance().writeln();
+    Message.ATTEMPTS.writeln(this.attempts);
+    this.secretCombination.writeln();
+    for (int i = 0; i < this.attempts; i++) {
+      this.proposedCombinations[i].write();
+      this.results[i].writeln();
     }
+  }
 
-    public void putSecretCombination(SecretCombination secretCombination) {
-        this.secretCombination = secretCombination;
-    }
+  public void add(ProposedCombination proposedCombination) {
+    this.proposedCombinations[this.attempts] = proposedCombination;
+    this.results[this.attempts] = this.secretCombination.getResult(proposedCombination);
+    this.attempts++;
+  }
 
-    public void proposeCombination(ProposedCombination combination) {
-        Result result = this.secretCombination.compareWith(combination);
-        this.results[this.currentAttempts] = result;
-        currentAttempts++;
-    }
+  public boolean isFinished() {
+    return this.isWinner() || this.isLooser();
+  }
 
-    public boolean isWinner() {
-        if(currentAttempts == 0)
-            return false;
+  public boolean isWinner() {
+    return this.results[this.attempts-1].isWinner();
+  }
 
-        Result lastResult = this.results[this.currentAttempts - 1];
-        return lastResult.isWinner();
-    }
+  private boolean isLooser() {
+    return this.attempts == Board.MAX_ATTEMPS;
+  }
 
-    public boolean isLooser() {
-        return currentAttempts == MAX_ATTEMPTS;
-    }
-
-    public void print() {
-        Message.ATTEMPTS.writeln(currentAttempts);
-        secretCombination.print();
-        Message.SEPARATOR.writeln();
-        for (int i = 0; i < currentAttempts; i++) {
-            results[i].print();
-        }
-    }
 }

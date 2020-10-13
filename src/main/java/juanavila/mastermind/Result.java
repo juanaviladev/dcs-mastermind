@@ -1,28 +1,25 @@
 package juanavila.mastermind;
 
-public class Result {
+class Result {
 
-    private static final int BLACKS_WINNING_AMOUNT = 4;
+	public static final int WIDTH = 4;
+	private int blacks = 0;
+	private int whites = 0;
 
-    private int blacks;
-    private int whites;
+	Result(int blacks, int whites) {
+		assert blacks >= 0;
+		assert whites >= 0;
 
-    private SecretCombination secret;
-    private ProposedCombination proposed;
+		this.blacks = blacks;
+		this.whites = whites;
+	}
 
-    public Result(int blacks, int whites, SecretCombination secret, ProposedCombination proposed) {
-        this.blacks = blacks;
-        this.whites = whites;
-        this.secret = secret;
-        this.proposed = proposed;
-    }
+	boolean isWinner() {
+		return this.blacks == Result.WIDTH;
+	}
 
-    boolean isWinner() {
-        return blacks == BLACKS_WINNING_AMOUNT;
-    }
-
-    public void print() {
-        proposed.print();
-        Message.RESULT.writeln(blacks, whites);
-    }
+	void writeln() {
+		Message.RESULT.writeln(this.blacks, this.whites);
+	}
+	
 }

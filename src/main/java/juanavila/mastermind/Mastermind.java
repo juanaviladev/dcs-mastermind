@@ -1,43 +1,40 @@
 package juanavila.mastermind;
 
-import juanavila.mastermind.utils.YesNoDialog;
+import juanavila.utils.YesNoDialog;
 
 public class Mastermind {
 
-    private static final int MAX_ATTEMPTS = 10;
+	private Board board;
+	
+	public void play() {
+		do {
+			this.playGame();
+		} while (this.isResumedGame());
+	}
 
-    private Board board;
+	private void playGame(){
+		Message.TITLE.writeln();
+		this.board = new Board();
+		this.board.writeln();
+		do {
+			ProposedCombination proposedCombination = new ProposedCombination();
+			proposedCombination.read();
+			this.board.add(proposedCombination);
+			this.board.writeln();
+		} while (!this.board.isFinished());
+		Message message = Message.LOOSER;
+		if (this.board.isWinner()){
+			message = Message.WINNER;
+		}
+		message.writeln();
+	}
 
-    private void newGame() {
-        this.board = new Board(MAX_ATTEMPTS);
-        Turn turn = new Turn(this.board);
+	private boolean isResumedGame() {
+		return new YesNoDialog().read(Message.RESUME.toString());
+	}
 
-        do {
-            turn.play();
-            this.board.print();
-        }
-        while(!this.isGameOver());
-
-        turn.winner().announceWin();
-    }
-
-    private void start() {
-        do {
-            this.newGame();
-        }
-        while(this.isGameResumed());
-    }
-
-    private boolean isGameResumed() {
-        return new YesNoDialog().ask(Message.RESUME.toString());
-    }
-
-    private boolean isGameOver() {
-        return board.isWinner() || board.isLooser();
-    }
-
-    public static void main(String[] args) {
-        new Mastermind().start();
-    }
+	public static void main(String[] args) {
+		new Mastermind().play();
+	}
 
 }

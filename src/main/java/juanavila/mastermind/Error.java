@@ -1,32 +1,30 @@
 package juanavila.mastermind;
 
-import juanavila.mastermind.utils.Console;
+import juanavila.utils.Console;
 
-public enum Error {
-    WRONG_PROPOSAL_LENGTH("Wrong proposed combination length"),
-    WRONG_COLORS("Wrong colors, they must be: %s"),
-    NULL_ERROR;
+enum Error {
+	DUPLICATED("Repeated colors"),
+	WRONG_CHARACTERS("Wrong colors, they must be: " + Color.getInitials()),
+	WRONG_LENGTH("Wrong proposed combination length"),
+	NULL_ERROR;
 
-    private String message;
+	private String message;
 
-    Error() {
+	private Error() {
+	}
 
-    }
+	private Error(String message) {
+		this.message = message;
+	}
 
-    Error(String message) {
-        this.message = message;
-    }
+	void writeln() {
+		if (!this.isNull()){
+			Console.instance().writeln(this.message);		
+		}
+	}
 
-    void write(Object... params) {
-        Console.instance().write(this.message, params);
-    }
-
-    void writeln(Object... params) {
-        Console.instance().writeln(this.message,params);
-    }
-
-    @Override
-    public String toString() {
-        return this.message;
-    }
+	public boolean isNull() {
+		return this == Error.NULL_ERROR;
+	}
+	
 }

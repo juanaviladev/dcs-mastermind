@@ -1,58 +1,57 @@
 package juanavila.mastermind;
 
-import juanavila.mastermind.utils.Console;
+import juanavila.utils.Console;
 
-import java.util.Random;
+enum Color {
+	RED('r'), 
+	BLUE('b'), 
+	YELLOW('y'), 
+	GREEN('g'), 
+	ORANGE('o'), 
+	PURPLE('p'),
+	NULL_COLOR;
 
-public enum Color {
-    RED("r"),
-    BLUE("b"),
-    YELLOW("y"),
-    GREEN("g"),
-    ORANGE("o"),
-    PURPLE("p"),
-    NULL();
+	private char initial;
 
-    private String letter;
-    private static final Random random = new Random();
+	private Color() {
+	}
 
-    Color(String letter) {
-        this.letter = letter;
-    }
+	private Color(char initial) {
+		this.initial = initial;
+	}
 
-    Color() {
+	static String getInitials() {
+		String result = "";
+		for(int i=0; i<Color.length(); i++) {
+			result += Color.get(i).initial;
+		}
+		return result;
+	}
 
-    }
+	static Color getInstance(char character) {
+		for(int i=0; i<Color.length(); i++) {
+			if (Color.get(i).initial == character) {
+				return Color.get(i);
+			}
+		}
+		return Color.NULL_COLOR;
+	}
 
-    public static Color random() {
-        Color[] possibleValues = Color.values();
-        return possibleValues[random.nextInt(possibleValues.length)];
-    }
+	static int length() {
+		return Color.values().length-1;
+	}
 
-    public static String palette() {
-        String colors = "";
-        for(Color color : Color.values()) {
-            if(!color.isNull()) {
-                colors += color.letter;
-            }
-        }
-        return colors;
-    }
+	static Color get(int index){
+		return Color.values()[index];
+	}
 
-    public boolean isNull() {
-        return this == Color.NULL;
-    }
+	void write() {
+		assert this != Color.NULL_COLOR;
+		new Console().write(this.initial);
+	}
 
-    public static Color from(char value) {
-        String valueText = value + "";
-        for(Color color : Color.values()) {
-            if(valueText.equals(color.letter))
-                return color;
-        }
-        return Color.NULL;
-    }
-
-    public void print() {
-        Console.instance().write(this.letter);
-    }
+	boolean isNull(){
+		return this == Color.NULL_COLOR;
+	}
+	
 }
