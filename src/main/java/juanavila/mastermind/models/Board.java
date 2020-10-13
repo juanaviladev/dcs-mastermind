@@ -1,6 +1,4 @@
-package juanavila.mastermind;
-
-import juanavila.utils.Console;
+package juanavila.mastermind.models;
 
 public class Board {
 
@@ -10,21 +8,11 @@ public class Board {
   private Result[] results;
   private int attempts;
 
-  Board() {
-    this.secretCombination = new SecretCombination();
+  public void putSecretCombination(SecretCombination secretCombination) {
     this.proposedCombinations = new ProposedCombination[Board.MAX_ATTEMPS];
-    this.results = new Result[Board.MAX_ATTEMPS];
+    this.secretCombination = secretCombination;
     this.attempts = 0;
-  }
-
-  public void writeln() {
-    Console.instance().writeln();
-    Message.ATTEMPTS.writeln(this.attempts);
-    this.secretCombination.writeln();
-    for (int i = 0; i < this.attempts; i++) {
-      this.proposedCombinations[i].write();
-      this.results[i].writeln();
-    }
+    this.results = new Result[Board.MAX_ATTEMPS];
   }
 
   public void add(ProposedCombination proposedCombination) {
@@ -45,4 +33,20 @@ public class Board {
     return this.attempts == Board.MAX_ATTEMPS;
   }
 
+  public int getAttempts() {
+    return attempts;
+  }
+
+
+  public SecretCombination getSecretCombination() {
+    return secretCombination;
+  }
+
+  public Result getResult(int i) {
+    return results[i];
+  }
+
+  public ProposedCombination getProposedCombination(int i) {
+    return proposedCombinations[i];
+  }
 }

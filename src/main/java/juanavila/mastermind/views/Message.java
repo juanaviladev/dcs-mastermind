@@ -1,4 +1,4 @@
-package juanavila.mastermind;
+package juanavila.mastermind.views;
 
 import juanavila.utils.Console;
 

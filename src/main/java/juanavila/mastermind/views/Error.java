@@ -1,5 +1,6 @@
-package juanavila.mastermind;
+package juanavila.mastermind.views;
 
+import juanavila.mastermind.models.Color;
 import juanavila.utils.Console;
 
 enum Error {

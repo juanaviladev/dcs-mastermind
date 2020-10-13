@@ -1,8 +1,6 @@
-package juanavila.mastermind;
+package juanavila.mastermind.models;
 
-import juanavila.utils.Console;
-
-enum Color {
+public enum Color {
 	RED('r'), 
 	BLUE('b'), 
 	YELLOW('y'), 
@@ -20,7 +18,7 @@ enum Color {
 		this.initial = initial;
 	}
 
-	static String getInitials() {
+	public static String getInitials() {
 		String result = "";
 		for(int i=0; i<Color.length(); i++) {
 			result += Color.get(i).initial;
@@ -28,7 +26,7 @@ enum Color {
 		return result;
 	}
 
-	static Color getInstance(char character) {
+	public static Color getInstance(char character) {
 		for(int i=0; i<Color.length(); i++) {
 			if (Color.get(i).initial == character) {
 				return Color.get(i);
@@ -37,21 +35,24 @@ enum Color {
 		return Color.NULL_COLOR;
 	}
 
-	static int length() {
+	public static int length() {
 		return Color.values().length-1;
 	}
 
-	static Color get(int index){
+	public static Color get(int index){
 		return Color.values()[index];
 	}
 
-	void write() {
-		assert this != Color.NULL_COLOR;
-		new Console().write(this.initial);
-	}
-
-	boolean isNull(){
+	public boolean isNull(){
 		return this == Color.NULL_COLOR;
 	}
-	
+
+	@Override
+	public String toString() {
+		return String.valueOf(initial);
+	}
+
+	public char getInitial() {
+		return initial;
+	}
 }

@@ -1,6 +1,6 @@
-package juanavila.mastermind;
+package juanavila.mastermind.models;
 
-class Result {
+public class Result {
 
 	public static final int WIDTH = 4;
 	private int blacks = 0;
@@ -18,8 +18,11 @@ class Result {
 		return this.blacks == Result.WIDTH;
 	}
 
-	void writeln() {
-		Message.RESULT.writeln(this.blacks, this.whites);
+	public int getWhites() {
+		return whites;
 	}
-	
+
+	public int getBlacks() {
+		return blacks;
+	}
 }

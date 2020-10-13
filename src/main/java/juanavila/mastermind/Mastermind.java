@@ -1,36 +1,23 @@
 package juanavila.mastermind;
 
+import juanavila.mastermind.models.Board;
+import juanavila.mastermind.views.BoardView;
+import juanavila.mastermind.views.GameView;
+import juanavila.mastermind.views.ProposedCombinationForm;
 import juanavila.utils.YesNoDialog;
 
 public class Mastermind {
 
 	private Board board;
-	
-	public void play() {
-		do {
-			this.playGame();
-		} while (this.isResumedGame());
-	}
+	private GameView gameView;
 
-	private void playGame(){
-		Message.TITLE.writeln();
+	public Mastermind() {
 		this.board = new Board();
-		this.board.writeln();
-		do {
-			ProposedCombination proposedCombination = new ProposedCombination();
-			proposedCombination.read();
-			this.board.add(proposedCombination);
-			this.board.writeln();
-		} while (!this.board.isFinished());
-		Message message = Message.LOOSER;
-		if (this.board.isWinner()){
-			message = Message.WINNER;
-		}
-		message.writeln();
+		this.gameView = new GameView(this.board);
 	}
 
-	private boolean isResumedGame() {
-		return new YesNoDialog().read(Message.RESUME.toString());
+	public void play() {
+		gameView.interact();
 	}
 
 	public static void main(String[] args) {
