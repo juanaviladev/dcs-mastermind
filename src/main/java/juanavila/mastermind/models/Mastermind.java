@@ -52,4 +52,7 @@ public class Mastermind {
 		return this.results.get(position);
 	}
 
+	public boolean isFinished() {
+		return isLooser() || isWinner();
+	}
 }
