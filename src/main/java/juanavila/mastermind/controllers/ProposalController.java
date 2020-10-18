@@ -4,7 +4,7 @@ import juanavila.mastermind.models.Mastermind;
 import juanavila.mastermind.models.ProposedCombination;
 import juanavila.mastermind.models.Result;
 
-public class ProposalController extends Controller {
+class ProposalController extends Controller {
 
 	public ProposalController(Mastermind game) {
 		super(game);

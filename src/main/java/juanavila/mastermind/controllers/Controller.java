@@ -2,7 +2,7 @@ package juanavila.mastermind.controllers;
 
 import juanavila.mastermind.models.Mastermind;
 
-public abstract class Controller {
+abstract class Controller {
     
     protected Mastermind game;
 
