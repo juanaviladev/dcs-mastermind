@@ -19,4 +19,6 @@ public abstract class Controller {
         this.state.reset();
     }
 
+    public abstract void accept(ControllerVisitor controllerVisitor);
+
 }

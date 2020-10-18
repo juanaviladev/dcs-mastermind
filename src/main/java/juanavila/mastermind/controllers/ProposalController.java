@@ -10,6 +10,11 @@ public class ProposalController extends Controller {
 		super(game, state);
 	}
 
+	@Override
+	public void accept(ControllerVisitor controllerVisitor) {
+		controllerVisitor.visit(this);
+	}
+
 	public int getAttempts() {
     	return this.game.getAttempts();
 	}
