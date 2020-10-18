@@ -2,14 +2,19 @@ package juanavila.mastermind.controllers;
 
 import juanavila.mastermind.models.Mastermind;
 
-class ResumeController extends Controller {
+public class ResumeController extends Controller {
 
-  public ResumeController(Mastermind game) {
-    super(game);
-  }
+    public ResumeController(Mastermind game, State state) {
+        super(game, state);
+    }
 
-  public void resume() {
-    this.game.clear();
-  }
+    public void resume(boolean newGame) {
+        if (newGame) {
+            this.game.clear();
+            reset();
+        } else {
+            next();
+        }
+    }
 
 }

@@ -4,10 +4,10 @@ import juanavila.mastermind.models.Mastermind;
 import juanavila.mastermind.models.ProposedCombination;
 import juanavila.mastermind.models.Result;
 
-class ProposalController extends Controller {
+public class ProposalController extends Controller {
 
-	public ProposalController(Mastermind game) {
-		super(game);
+	public ProposalController(Mastermind game, State state) {
+		super(game, state);
 	}
 
 	public int getAttempts() {
@@ -16,6 +16,9 @@ class ProposalController extends Controller {
 
 	public void addProposedCombination(ProposedCombination combination) {
 		this.game.addProposedCombination(combination);
+		if(this.game.isFinished()) {
+			next();
+		}
 	}
 
 	public boolean isWinner() {

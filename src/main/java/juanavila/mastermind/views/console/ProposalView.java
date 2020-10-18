@@ -1,40 +1,34 @@
 package juanavila.mastermind.views.console;
 
-import juanavila.mastermind.controllers.Logic;
+import juanavila.mastermind.controllers.ProposalController;
 import juanavila.mastermind.models.ProposedCombination;
 import juanavila.utils.WithConsoleView;
 
 class ProposalView extends WithConsoleView {
 
-	private Logic logic;
-	
 	private SecretCombinationView secretCombinationView;
 
-	ProposalView(Logic logic) {
-		this.logic = logic;
+	ProposalView() {
 		this.secretCombinationView = new SecretCombinationView();
 	}
 
-	boolean interact() {
+	void interact(ProposalController controller) {
 		ProposedCombination proposedCombination = new ProposedCombination();
 		ProposedCombinationView proposedCombinationView = new ProposedCombinationView(proposedCombination);
 		proposedCombinationView.read();
-		this.logic.addProposedCombination(proposedCombination);
+		controller.addProposedCombination(proposedCombination);
 		this.console.writeln();
-		MessageView.ATTEMPTS.writeln(this.logic.getAttempts());
+		MessageView.ATTEMPTS.writeln(controller.getAttempts());
 		this.secretCombinationView.writeln();
-		for (int i = 0; i < this.logic.getAttempts(); i++) {
-			new ProposedCombinationView(this.logic.getProposedCombination(i)).write();
-			new ResultView(this.logic.getResult(i)).writeln();
+		for (int i = 0; i < controller.getAttempts(); i++) {
+			new ProposedCombinationView(controller.getProposedCombination(i)).write();
+			new ResultView(controller.getResult(i)).writeln();
 		}
-		if (this.logic.isWinner()) {
+		if (controller.isWinner()) {
 			MessageView.WINNER.writeln();
-			return true;
-		} else if (this.logic.isLooser()) {
+		} else if (controller.isLooser()) {
 			MessageView.LOOSER.writeln();
-			return true;
 		}
-		return false;
 	}
 
 }

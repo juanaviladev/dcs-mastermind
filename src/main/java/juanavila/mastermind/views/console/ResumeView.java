@@ -1,23 +1,14 @@
 package juanavila.mastermind.views.console;
 
-import juanavila.mastermind.controllers.Logic;
+import juanavila.mastermind.controllers.ResumeController;
 import juanavila.utils.YesNoDialog;
 
 class ResumeView {
 
-	private Logic logic;
-
-	ResumeView(Logic logic) {
-		this.logic = logic;
-	}
-
-	boolean interact() {
+	void interact(ResumeController controller) {
 		MessageView.RESUME.write();
 		boolean newGame = new YesNoDialog().read();
-		if (newGame) {
-			this.logic.resume();
-		}
-		return newGame;
+		controller.resume(newGame);
 	}
 
 }
