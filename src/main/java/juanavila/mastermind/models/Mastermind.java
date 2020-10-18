@@ -3,7 +3,7 @@ package juanavila.mastermind.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game {
+public class Mastermind {
 
 	private static final int MAX_LONG = 10;
 
@@ -15,7 +15,7 @@ public class Game {
 
 	private int attempts;
 
-	public Game() {
+	public Mastermind() {
 		this.clear();
 	}
 
@@ -33,7 +33,7 @@ public class Game {
 	}
 
 	public boolean isLooser() {
-		return this.attempts == Game.MAX_LONG;
+		return this.attempts == Mastermind.MAX_LONG;
 	}
 	
 	public boolean isWinner() {

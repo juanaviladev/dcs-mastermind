@@ -1,4 +1,4 @@
-package juanavila.mastermind.views;
+package juanavila.mastermind.console;
 
 import juanavila.utils.Console;
 
@@ -14,7 +14,7 @@ enum MessageView {
 
 	private String message;
 	
-	private Console console;
+	private Console console = Console.instance();
 	
 	private MessageView(String message) {
 		this.message = message;

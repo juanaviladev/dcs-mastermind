@@ -1,13 +1,13 @@
-package juanavila.mastermind.views;
+package juanavila.mastermind.console;
 
-import juanavila.mastermind.models.Game;
+import juanavila.mastermind.models.Mastermind;
 import juanavila.utils.YesNoDialog;
 
 class ResumeView {
 
-	private Game game;
+	private Mastermind game;
 
-	ResumeView(Game game) {
+	ResumeView(Mastermind game) {
 		this.game = game;
 	}
 

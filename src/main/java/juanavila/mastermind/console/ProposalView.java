@@ -1,16 +1,16 @@
-package juanavila.mastermind.views;
+package juanavila.mastermind.console;
 
-import juanavila.mastermind.models.Game;
+import juanavila.mastermind.models.Mastermind;
 import juanavila.mastermind.models.ProposedCombination;
 import juanavila.utils.WithConsoleView;
 
 class ProposalView extends WithConsoleView {
 
-	private Game game;
+	private Mastermind game;
 	
 	private SecretCombinationView secretCombinationView;
 
-	ProposalView(Game game) {
+	ProposalView(Mastermind game) {
 		this.game = game;
 		this.secretCombinationView = new SecretCombinationView();
 	}

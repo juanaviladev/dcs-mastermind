@@ -5,8 +5,16 @@ import java.io.InputStreamReader;
 
 public class Console {
 
+	private static Console instance;
 	private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-	
+
+	public static Console instance() {
+		if(instance == null)
+			instance = new Console();
+
+		return instance;
+	}
+
 	public String readString(String title) {
 		String input = null;
 		boolean ok = false;
