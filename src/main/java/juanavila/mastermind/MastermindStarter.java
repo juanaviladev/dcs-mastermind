@@ -1,5 +1,7 @@
 package juanavila.mastermind;
 
+import juanavila.mastermind.controllers.ProposalController;
+import juanavila.mastermind.controllers.ResumeController;
 import juanavila.mastermind.models.Mastermind;
 import juanavila.mastermind.views.MastermindView;
 
@@ -9,13 +11,16 @@ public abstract class MastermindStarter {
 
     public MastermindStarter() {
         Mastermind game = new Mastermind();
-        this.view = createView(game);
+
+        ProposalController proposalController = new ProposalController(game);
+        ResumeController resumeController = new ResumeController(game);
+
+        this.view = createView(proposalController, resumeController);
     }
 
     void start() {
         view.interact();
     }
 
-    abstract MastermindView createView(Mastermind mastermind);
-
+    abstract MastermindView createView(ProposalController proposalController, ResumeController resumeController);
 }

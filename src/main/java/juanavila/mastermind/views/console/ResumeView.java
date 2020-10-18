@@ -1,21 +1,21 @@
 package juanavila.mastermind.views.console;
 
-import juanavila.mastermind.models.Mastermind;
+import juanavila.mastermind.controllers.ResumeController;
 import juanavila.utils.YesNoDialog;
 
 class ResumeView {
 
-	private Mastermind game;
+	private ResumeController controller;
 
-	ResumeView(Mastermind game) {
-		this.game = game;
+	ResumeView(ResumeController controller) {
+		this.controller = controller;
 	}
 
 	boolean interact() {
 		MessageView.RESUME.write();
 		boolean newGame = new YesNoDialog().read();
 		if (newGame) {
-			this.game.clear();
+			this.controller.resume();
 		}
 		return newGame;
 	}
