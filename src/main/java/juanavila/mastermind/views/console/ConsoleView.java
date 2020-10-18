@@ -1,7 +1,6 @@
 package juanavila.mastermind.views.console;
 
-import juanavila.mastermind.controllers.ProposalController;
-import juanavila.mastermind.controllers.ResumeController;
+import juanavila.mastermind.controllers.Logic;
 import juanavila.mastermind.views.MastermindView;
 
 public class ConsoleView extends MastermindView {
@@ -10,10 +9,10 @@ public class ConsoleView extends MastermindView {
     private ProposalView proposalView;
     private ResumeView resumeView;
 
-    public ConsoleView(ProposalController proposalController, ResumeController resumeController) {
+    public ConsoleView(Logic logic) {
         this.startView = new StartView();
-        this.proposalView = new ProposalView(proposalController);
-        this.resumeView = new ResumeView(resumeController);
+        this.proposalView = new ProposalView(logic);
+        this.resumeView = new ResumeView(logic);
     }
 
     @Override
