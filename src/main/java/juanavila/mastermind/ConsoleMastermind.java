@@ -1,8 +1,8 @@
 package juanavila.mastermind;
 
-import juanavila.mastermind.console.ConsoleView;
-import juanavila.mastermind.console.MastermindView;
 import juanavila.mastermind.models.Mastermind;
+import juanavila.mastermind.views.console.ConsoleView;
+import juanavila.mastermind.views.MastermindView;
 
 public class ConsoleMastermind {
 

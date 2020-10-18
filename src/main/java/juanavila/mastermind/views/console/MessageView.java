@@ -1,8 +1,8 @@
-package juanavila.mastermind.console;
+package juanavila.mastermind.views.console;
 
 import juanavila.utils.Console;
 
-enum MessageView {
+public enum MessageView {
 	ATTEMPTS("#attempts attempt(s): "),
 	SECRET("*"),
 	RESUME("Do you want to continue"),

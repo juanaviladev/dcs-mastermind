@@ -1,9 +1,9 @@
-package juanavila.mastermind.console;
+package juanavila.mastermind.views.console;
 
 import juanavila.mastermind.models.Color;
 import juanavila.utils.WithConsoleView;
 
-class ColorView extends WithConsoleView{
+public class ColorView extends WithConsoleView{
 	
 	private static final char[] INITIALS = {'r', 'b', 'y', 'g', 'o', 'p'};
 

@@ -1,6 +1,7 @@
-package juanavila.mastermind.console;
+package juanavila.mastermind.views.console;
 
 import juanavila.mastermind.models.Mastermind;
+import juanavila.mastermind.views.MastermindView;
 
 public class ConsoleView extends MastermindView {
 
@@ -18,7 +19,7 @@ public class ConsoleView extends MastermindView {
     }
 
     @Override
-    void play() {
+    public void play() {
         boolean newGame;
         do {
             this.startView.interact();
@@ -31,7 +32,7 @@ public class ConsoleView extends MastermindView {
     }
 
     @Override
-    boolean isResumed() {
+    public boolean isResumed() {
         return resumeView.interact();
     }
 }

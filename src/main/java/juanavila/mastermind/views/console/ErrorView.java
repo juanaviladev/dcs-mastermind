@@ -1,9 +1,9 @@
-package juanavila.mastermind.console;
+package juanavila.mastermind.views.console;
 
 import juanavila.mastermind.models.Error;
 import juanavila.utils.WithConsoleView;
 
-class ErrorView extends WithConsoleView {
+public class ErrorView extends WithConsoleView {
 
 	private static final String[] MESSAGES = { 
 			"Repeated colors",

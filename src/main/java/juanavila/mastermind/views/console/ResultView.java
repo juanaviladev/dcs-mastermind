@@ -1,4 +1,4 @@
-package juanavila.mastermind.console;
+package juanavila.mastermind.views.console;
 
 import juanavila.mastermind.models.Result;
 import juanavila.utils.WithConsoleView;

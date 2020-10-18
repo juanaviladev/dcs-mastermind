@@ -1,4 +1,4 @@
-package juanavila.mastermind.console;
+package juanavila.mastermind.views;
 
 public abstract class MastermindView {
 
@@ -8,8 +8,8 @@ public abstract class MastermindView {
         } while (this.isResumed());
     }
 
-    abstract void play();
+    public abstract void play();
 
-    abstract boolean isResumed();
+    public abstract boolean isResumed();
 
 }
