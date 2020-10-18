@@ -20,15 +20,11 @@ public class ConsoleView extends MastermindView {
 
     @Override
     public void play() {
-        boolean newGame;
+        this.startView.interact();
+        boolean finished;
         do {
-            this.startView.interact();
-            boolean finished;
-            do {
-                finished = this.proposalView.interact();
-            } while (!finished);
-            newGame = this.resumeView.interact();
-        } while (newGame);
+            finished = this.proposalView.interact();
+        } while (!finished);
     }
 
     @Override
