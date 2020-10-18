@@ -1,16 +1,18 @@
 package juanavila.mastermind.views;
 
 import juanavila.mastermind.models.Result;
+import juanavila.utils.WithConsoleView;
 
-public class ResultView {
+class ResultView extends WithConsoleView {
+	
+	private Result result;
 
-    private final Result result;
+	ResultView(Result result) {
+		this.result = result;
+	}
 
-    public ResultView(Result result) {
-        this.result = result;
-    }
+	void writeln() {
+		MessageView.RESULT.writeln(this.result.getBlacks(), this.result.getWhites());
+	}
 
-    public void print() {
-        Message.RESULT.writeln(result.getBlacks(), result.getWhites());
-    }
 }

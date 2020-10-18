@@ -1,21 +1,19 @@
 package juanavila.mastermind.views;
 
 import juanavila.mastermind.models.SecretCombination;
-import juanavila.utils.Console;
+import juanavila.utils.WithConsoleView;
 
-public class SecretCombinationView {
+class SecretCombinationView extends WithConsoleView {
 
-    private SecretCombination combination;
+	SecretCombinationView() {
+		super();
+	}
 
-    public SecretCombinationView(SecretCombination combination) {
-        this.combination = combination;
-    }
-
-    public void print() {
-        for(int i = 0; i < combination.size(); i++)
-            Message.SECRET.write();
-
-        Console.instance().writeln();
-    }
+	void writeln() {
+		for (int i = 0; i < SecretCombination.getWidth(); i++) {
+			MessageView.SECRET.write();
+		}
+		this.console.writeln();
+	}
 
 }

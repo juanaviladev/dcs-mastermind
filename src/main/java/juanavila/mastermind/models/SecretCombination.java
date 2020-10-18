@@ -1,16 +1,19 @@
 package juanavila.mastermind.models;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-import juanavila.utils.Console;
-
 import java.util.Collections;
+import java.util.Random;
 
 public class SecretCombination extends Combination {
 
-	public SecretCombination(ArrayList<Color> colors) {
-		super(colors);
+	SecretCombination() {
+		for(Color color: Color.values()) {
+			this.colors.add(color);
+		}
+		Random random = new Random(System.currentTimeMillis());
+		for (int i = 0; i < Color.length() - Combination.getWidth(); i++) {
+			this.colors.remove(random.nextInt(this.colors.size()));
+		}
+		Collections.shuffle(this.colors);
 	}
 
 	Result getResult(ProposedCombination proposedCombination) {
@@ -28,4 +31,5 @@ public class SecretCombination extends Combination {
 		}
 		return new Result(blacks, whites - blacks);
 	}
+
 }

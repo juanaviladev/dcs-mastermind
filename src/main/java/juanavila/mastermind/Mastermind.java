@@ -1,27 +1,25 @@
 package juanavila.mastermind;
 
-import juanavila.mastermind.models.Board;
-import juanavila.mastermind.views.BoardView;
-import juanavila.mastermind.views.GameView;
-import juanavila.mastermind.views.ProposedCombinationForm;
-import juanavila.utils.YesNoDialog;
+import juanavila.mastermind.models.Game;
+import juanavila.mastermind.views.View;
 
 public class Mastermind {
 
-	private Board board;
-	private GameView gameView;
+	private Game game;
+	
+	private View view;
 
-	public Mastermind() {
-		this.board = new Board();
-		this.gameView = new GameView(this.board);
+	private Mastermind() {
+		this.game = new Game();
+		this.view = new View(this.game);
 	}
 
-	public void play() {
-		gameView.interact();
+	private void play() {
+		this.view.interact();
 	}
-
+	
 	public static void main(String[] args) {
 		new Mastermind().play();
-	}
+	}	
 
 }
