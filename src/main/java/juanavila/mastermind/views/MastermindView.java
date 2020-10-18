@@ -1,15 +1,9 @@
 package juanavila.mastermind.views;
 
+import juanavila.mastermind.controllers.Controller;
+
 public abstract class MastermindView {
 
-    public void interact() {
-        do {
-            this.play();
-        } while (this.isResumed());
-    }
-
-    public abstract void play();
-
-    public abstract boolean isResumed();
+    public abstract void interact(Controller controller);
 
 }

@@ -8,7 +8,7 @@ public class ConsoleMastermind extends MastermindStarter {
 
     @Override
     MastermindView createView(Logic logic) {
-        return new ConsoleView(logic);
+        return new ConsoleView();
     }
 
     public static void main(String[] args) {

@@ -1,16 +1,12 @@
 package juanavila.mastermind.views.graphics;
 
+import juanavila.mastermind.controllers.Controller;
 import juanavila.mastermind.views.MastermindView;
 
 public class GraphicsView extends MastermindView {
 
     @Override
-    public void play() {
-        throw new UnsupportedOperationException("Swing graphics version is not yet supported");
-    }
+    public void interact(Controller controller) {
 
-    @Override
-    public boolean isResumed() {
-        return false;
     }
 }

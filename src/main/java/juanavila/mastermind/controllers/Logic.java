@@ -1,47 +1,30 @@
 package juanavila.mastermind.controllers;
 
 import juanavila.mastermind.models.Mastermind;
-import juanavila.mastermind.models.ProposedCombination;
-import juanavila.mastermind.models.Result;
+import juanavila.mastermind.models.StateValue;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Logic {
 
+    private Map<StateValue, Controller> controllers;
     private Mastermind game;
-
-    private ProposalController proposalController;
-    private ResumeController resumeController;
+    private State state;
 
     public Logic() {
         this.game = new Mastermind();
-        this.proposalController = new ProposalController(this.game);
-        this.resumeController = new ResumeController(this.game);
+        this.controllers = new HashMap<>();
+        this.state = new State();
+
+        this.controllers.put(StateValue.START, new StartController(this.game, this.state));
+        this.controllers.put(StateValue.PROPOSAL, new ProposalController(this.game, this.state));
+        this.controllers.put(StateValue.RESUME, new ResumeController(this.game, this.state));
+        this.controllers.put(StateValue.EXIT, null);
     }
 
-    public void addProposedCombination(ProposedCombination combination) {
-        this.proposalController.addProposedCombination(combination);
+    public Controller getController() {
+        return this.controllers.get(this.state.getValue());
     }
 
-    public int getAttempts() {
-        return proposalController.getAttempts();
-    }
-
-    public ProposedCombination getProposedCombination(int position) {
-        return proposalController.getProposedCombination(position);
-    }
-
-    public Result getResult(int position) {
-        return proposalController.getResult(position);
-    }
-
-    public boolean isWinner() {
-        return proposalController.isWinner();
-    }
-
-    public boolean isLooser() {
-        return proposalController.isLooser();
-    }
-
-    public void resume() {
-        resumeController.resume();
-    }
 }
