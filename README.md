@@ -1,4 +1,4 @@
-# mvp.pm.withDoubleDispatching
+# modelViewPresenter
 
 ## Diagrama de clases
 
