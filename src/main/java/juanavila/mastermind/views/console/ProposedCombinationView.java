@@ -24,7 +24,7 @@ class ProposedCombinationView extends WithConsoleView {
 		Error error;
 		do {
 			error = null;
-			MessageView.PROPOSED_COMBINATION.write();
+			MessageView.PROPOSE_COMBINATION.write();
 			String characters = this.console.readString();
 			if (characters.length() > Combination.getWidth()) {
 				error = Error.WRONG_LENGTH;
