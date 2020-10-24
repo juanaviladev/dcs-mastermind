@@ -1,6 +1,6 @@
 package juanavila.mastermind;
 
-import juanavila.mastermind.controllers.Controller;
+import juanavila.mastermind.controllers.AcceptorController;
 import juanavila.mastermind.controllers.Logic;
 import juanavila.mastermind.views.MastermindView;
 
@@ -15,7 +15,7 @@ public abstract class MastermindStarter {
     }
 
     void start() {
-        Controller controller;
+        AcceptorController controller;
         do {
             controller = this.logic.getController();
             if (controller != null) {
