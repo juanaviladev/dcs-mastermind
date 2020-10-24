@@ -8,13 +8,12 @@ class mastermind.views.ColorView {
 utils.WithConsoleView <|--- mastermind.views.ColorView
 
 class mastermind.views.SecretCombinationView {
-    ~ playController: ProposalController
-    ~ SecretCombinationView(ProposalController)
+    ~ SecretCombinationView(PlayController)
     ~ writeln(): void
 }
 utils.WithConsoleView <|--- mastermind.views.SecretCombinationView
 mastermind.views.SecretCombinationView ..> mastermind.views.MessageView
-mastermind.views.SecretCombinationView --> mastermind.controllers.ProposalController
+mastermind.views.SecretCombinationView --> mastermind.controllers.PlayController
 mastermind.views.SecretCombinationView ..> mastermind.views.MessageView
 
 class mastermind.views.ErrorView {
@@ -143,15 +142,6 @@ abstract class mastermind.controllers.Controller {
 mastermind.controllers.PlayController ---> mastermind.models.Session
 mastermind.controllers.Controller *--> mastermind.models.Session
 
-class mastermind.controllers.PlayController {
-    - undoController: UndoController
-    - redoController: RedoController
-}
-mastermind.controllers.AcceptorController <|.. mastermind.controllers.PlayController
-mastermind.controllers.Controller <|-- mastermind.controllers.PlayController
-mastermind.controllers.PlayController *--> mastermind.controllers.UndoController
-mastermind.controllers.PlayController *--> mastermind.controllers.RedoController
-
 class mastermind.controllers.RedoController {
     ~ redo(): void
     ~ isRedoable(): boolean
@@ -164,6 +154,15 @@ class mastermind.controllers.UndoController {
 }
 mastermind.controllers.Controller <|-- mastermind.controllers.UndoController
 
+class mastermind.controllers.PlayController {
+    ~ undo(): void
+    ~ isUndoable(): boolean
+}
+mastermind.controllers.Controller <|-- mastermind.controllers.PlayController
+mastermind.controllers.AcceptorController <|.. mastermind.controllers.PlayController
+mastermind.controllers.PlayController *--> mastermind.controllers.UndoController
+mastermind.controllers.PlayController *--> mastermind.controllers.RedoController
+mastermind.controllers.PlayController *--> mastermind.controllers.ProposalController
 
 class mastermind.models.Session {
     - mastermind: Mastermind
