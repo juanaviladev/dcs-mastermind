@@ -15,7 +15,7 @@ public abstract class Controller {
     }
 
     public void reset() {
-        this.session.restart();
+        this.session.reset();
     }
 
 }

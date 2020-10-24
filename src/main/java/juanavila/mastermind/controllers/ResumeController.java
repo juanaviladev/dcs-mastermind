@@ -15,7 +15,6 @@ public class ResumeController extends Controller implements AcceptorController {
 
     public void resume(boolean newGame) {
         if (newGame) {
-            this.session.restart();
             reset();
         } else {
             next();
