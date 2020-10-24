@@ -9,7 +9,7 @@ public class Session {
     public Session() {
         this.state = new State();
         this.mastermind = new Mastermind();
-        this.restart();
+        this.reset();
     }
 
     public void redo() {
@@ -32,8 +32,8 @@ public class Session {
         return this.mastermind.isFinished();
     }
 
-    public void restart() {
-        this.mastermind.restart();
+    public void reset() {
+        this.mastermind.reset();
         this.state.reset();
         this.registry = new GameRegistry(this.mastermind);
     }

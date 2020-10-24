@@ -16,13 +16,13 @@ public class Mastermind {
 	private int attempts;
 
 	public Mastermind() {
-		this.restart();
+		this.reset();
 	}
 
-	public void restart() {
+	public void reset() {
 		this.secretCombination = new SecretCombination();
-		this.proposedCombinations = new ArrayList<ProposedCombination>();
-		this.results = new ArrayList<Result>();
+		this.proposedCombinations = new ArrayList<>();
+		this.results = new ArrayList<>();
 		this.attempts = 0;
 	}
 
