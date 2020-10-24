@@ -16,10 +16,10 @@ public class Mastermind {
 	private int attempts;
 
 	public Mastermind() {
-		this.clear();
+		this.restart();
 	}
 
-	public void clear() {
+	public void restart() {
 		this.secretCombination = new SecretCombination();
 		this.proposedCombinations = new ArrayList<ProposedCombination>();
 		this.results = new ArrayList<Result>();
@@ -54,5 +54,15 @@ public class Mastermind {
 
 	public boolean isFinished() {
 		return isLooser() || isWinner();
+	}
+
+	public GameMemento createMemento() {
+		return new GameMemento(this.proposedCombinations, this.results, this.attempts);
+	}
+
+	public void restore(GameMemento memento) {
+		this.proposedCombinations = memento.getProposedCombinations();
+		this.results = memento.getResults();
+		this.attempts = memento.getAttempts();
 	}
 }
