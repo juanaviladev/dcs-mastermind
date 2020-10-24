@@ -40,4 +40,7 @@ public class Session {
         this.state.reset();
     }
 
+    public StateValue getValue() {
+        return this.state.getValue();
+    }
 }
