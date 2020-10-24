@@ -6,7 +6,7 @@ import juanavila.mastermind.models.ProposedCombination;
 public class ProposalCommand extends Command {
 
     public ProposalCommand(PlayController playController) {
-        super(MessageView.PROPOSE_COMBINATION.getTitle(), playController);
+        super(MessageView.PROPOSAL_COMMAND.getTitle(), playController);
     }
 
     @Override
