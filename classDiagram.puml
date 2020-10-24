@@ -134,4 +134,32 @@ mastermind.views.View *--> mastermind.views.StartView
 mastermind.views.View *--> mastermind.views.PlayView
 mastermind.views.View *--> mastermind.views.ResumeView
 
+interface mastermind.controllers.AcceptorController { }
+
+abstract class mastermind.controllers.Controller {
+    ~ session: Session
+    + View(Session)
+}
+mastermind.controllers.PlayController ---> mastermind.models.Session
+
+class mastermind.controllers.PlayController {
+    - undoController: UndoController
+    - redoController: RedoController
+}
+mastermind.controllers.AcceptorController <|.. mastermind.controllers.PlayController
+mastermind.controllers.Controller <|-- mastermind.controllers.PlayController
+mastermind.controllers.PlayController *--> mastermind.controllers.UndoController
+mastermind.controllers.PlayController *--> mastermind.controllers.RedoController
+
+class mastermind.models.Session {
+    - mastermind: Mastermind
+    - registry: GameRegistry
+    - state: State
+    + Session()
+}
+mastermind.models.Session *--> mastermind.models.Mastermind
+mastermind.models.Session *--> mastermind.models.GameRegistry
+mastermind.models.Session *--> mastermind.models.State
+
+
 @enduml
