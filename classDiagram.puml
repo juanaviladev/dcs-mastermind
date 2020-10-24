@@ -141,6 +141,7 @@ abstract class mastermind.controllers.Controller {
     + View(Session)
 }
 mastermind.controllers.PlayController ---> mastermind.models.Session
+mastermind.controllers.Controller *--> mastermind.models.Session
 
 class mastermind.controllers.PlayController {
     - undoController: UndoController
@@ -161,5 +162,16 @@ mastermind.models.Session *--> mastermind.models.Mastermind
 mastermind.models.Session *--> mastermind.models.GameRegistry
 mastermind.models.Session *--> mastermind.models.State
 
+class mastermind.models.GameRegistry {
+   - mementos: List<GameMemento>
+   - mastermind: Mastermind
+   - actualIndex: int
+   ~ GameRegistry(Mastermind)
+   ~ register(): void
+   ~ undo(): void
+   ~ redo(): void
+   ~ isUndoable(): boolean
+   ~ isRedoable(): boolean
+}
 
 @enduml
