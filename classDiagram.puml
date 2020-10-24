@@ -16,23 +16,6 @@ mastermind.views.SecretCombinationView ..> mastermind.views.MessageView
 mastermind.views.SecretCombinationView --> mastermind.controllers.PlayController
 mastermind.views.SecretCombinationView ..> mastermind.views.MessageView
 
-class mastermind.views.ErrorView {
-    + {static} MESSAGES: String[]
-    # error: Error
-    + ErrorView(Error)
-    ~ writeln(): void
-}
-
-class mastermind.views.ProposalView {
-    ~ ProposalView()
-    ~ interact(controller: PlayController)
-}
-mastermind.views.ProposalView ..> mastermind.controllers.PlayController
-mastermind.views.ProposalView ..> mastermind.views.SecretCombinationView
-mastermind.views.ProposalView ..> mastermind.views.ProposedCombination
-mastermind.views.ProposalView ..> mastermind.views.ProposedCombinationView
-mastermind.views.ProposalView ..> mastermind.views.ResultView
-
 class mastermind.views.ProposedCombinationView {
     ~ ProposedCombinationView(combination: ProposedCombination)
     ~ void write()
@@ -53,9 +36,9 @@ enum mastermind.views.MessageView {
 }
 
 class mastermind.views.Command {
-    # playController: ProposalController
+    # playController: PlayController
     - title: String
-    # Command(String, ProposalController)
+    # Command(String, PlayController)
     # {abstract} execute(): void
     # {abstract} isActive(): boolean
     ~ getTitle(): String
@@ -72,30 +55,29 @@ class mastermind.views.UndoCommand {
 mastermind.views.Command <|-- mastermind.views.UndoCommand
 mastermind.views.UndoCommand ..> mastermind.views.MessageView
 mastermind.views.UndoCommand ..> mastermind.controllers.PlayController
-mastermind.views.UndoCommand ..> mastermind.views.GameView
 
-class mastermind.views.ResumeCommand {
-    ~ ResumeCommand(controller: ResumeController)
+class mastermind.views.ProposalCommand {
+    ~ ProposalCommand(controller: PlayController)
 }
-mastermind.views.Command <|-- mastermind.views.ResumeCommand
-mastermind.views.ResumeCommand ..> mastermind.controllers.PlayController
+mastermind.views.Command <|-- mastermind.views.ProposalCommand
+mastermind.views.ProposalCommand ..> mastermind.views.ProposedCombinationView
+mastermind.views.ProposalCommand ..> mastermind.controllers.PlayController
 mastermind.views.ProposalCommand ..> mastermind.views.MessageView
-mastermind.views.ProposalCommand ..> mastermind.views.YesNoDialog
 
 class mastermind.views.PlayMenu {
     ~ PlayMenu(controller: PlayController)
 }
-utils.Menu <|--- mastermind.views.PlayMenu
+mastermind.utils.Menu <|--- mastermind.views.PlayMenu
 mastermind.views.PlayMenu ..> mastermind.controllers.PlayController
 mastermind.views.PlayMenu *--> mastermind.views.ProposalCommand
 mastermind.views.PlayMenu *--> mastermind.views.UndoCommand
 mastermind.views.PlayMenu *--> mastermind.views.RedoCommand
 
 class mastermind.views.PlayView {
-    + interact(controller: ProposalController): void
+    + interact(controller: PlayController): void
 }
-mastermind.views.PlayView ..> mastermind.controllers.ProposalController
 mastermind.views.PlayView ..> mastermind.views.PlayMenu
+mastermind.views.PlayView ..> mastermind.views.BoardView
 
 class mastermind.views.ResultView {
     ~ writeln(int): void
@@ -124,16 +106,18 @@ class mastermind.views.View {
     + View()
     + interact(controller: AcceptorController): void
     + visit(controller: StartController): void
-    + visit(controller: ProposalController): void
+    + visit(controller: PlayController): void
     + visit(controller: ResumeController): void
 }
-mastermind.controllers.ControllersVisitor <|-- mastermind.views.View
+mastermind.controllers.ControllerVisitor <|.. mastermind.views.View
 mastermind.views.View ..> mastermind.controllers.AcceptorController
+mastermind.views.View ..> mastermind.controllers.PlayController
 mastermind.views.View *--> mastermind.views.StartView
 mastermind.views.View *--> mastermind.views.PlayView
 mastermind.views.View *--> mastermind.views.ResumeView
 
 interface mastermind.controllers.AcceptorController { }
+interface mastermind.controllers.ControllerVisitor { }
 
 abstract class mastermind.controllers.Controller {
     ~ session: Session
@@ -153,6 +137,17 @@ class mastermind.controllers.UndoController {
     ~ isUndoable(): boolean
 }
 mastermind.controllers.Controller <|-- mastermind.controllers.UndoController
+
+class mastermind.controllers.ProposalController {
+    ~ getAttempts() : int
+    ~ addProposedCombination() : void
+    ~ isWinner() : boolean
+    ~ isLooser() : boolean
+    ~ isFinished() : boolean
+    ~ getProposedCombination(pos: int) : ProposedCombination
+    ~ getResult(pos: int) : Result
+}
+mastermind.controllers.Controller <|-- mastermind.controllers.ProposalController
 
 class mastermind.controllers.PlayController {
     ~ undo(): void
@@ -200,5 +195,25 @@ class mastermind.models.GameMemento {
    - attempts: int
    ~ GameMemento(proposedCombinations, results, attempts)
 }
+
+class mastermind.views.BoardView {
+   ~ write(PlayController): void
+}
+mastermind.views.BoardView --> mastermind.controllers.PlayController
+mastermind.views.BoardView ..> mastermind.views.ResultView
+
+class mastermind.controllers.ResumeController {
+   ~ ResumeController(Session)
+   ~ resume(newGame): void
+}
+mastermind.controllers.AcceptorController <|.. mastermind.controllers.ResumeController
+mastermind.controllers.Controller <|-- mastermind.controllers.ResumeController
+mastermind.controllers.ResumeController ..> mastermind.controllers.ControllerVisitor
+
+class mastermind.controllers.StartController {
+   ~ StartController(Session)
+}
+mastermind.controllers.AcceptorController <|.. mastermind.controllers.StartController
+mastermind.controllers.Controller <|-- mastermind.controllers.StartController
 
 @enduml
