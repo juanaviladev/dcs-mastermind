@@ -2,15 +2,10 @@ package juanavila.mastermind.controllers;
 
 import juanavila.mastermind.models.*;
 
-public class ProposalController extends Controller implements AcceptorController {
+public class ProposalController extends Controller {
 
 	public ProposalController(Session session) {
 		super(session);
-	}
-
-	@Override
-	public void accept(ControllerVisitor controllerVisitor) {
-		controllerVisitor.visit(this);
 	}
 
 	public int getAttempts() {
@@ -40,4 +35,7 @@ public class ProposalController extends Controller implements AcceptorController
 		return this.session.getResult(position);
 	}
 
+	public boolean isFinished() {
+		return this.session.isFinished();
+	}
 }
