@@ -6,17 +6,17 @@ import juanavila.mastermind.views.MastermindView;
 public class View extends MastermindView implements ControllerVisitor {
 
     private StartView startView;
-    private ProposalView proposalView;
+    private PlayView playView;
     private ResumeView resumeView;
 
     public View() {
         this.startView = new StartView();
-        this.proposalView = new ProposalView();
+        this.playView = new PlayView();
         this.resumeView = new ResumeView();
     }
 
     @Override
-    public void interact(Controller controller) {
+    public void interact(AcceptorController controller) {
         controller.accept(this);
     }
 
@@ -26,8 +26,8 @@ public class View extends MastermindView implements ControllerVisitor {
     }
 
     @Override
-    public void visit(ProposalController controller) {
-        this.proposalView.interact(controller);
+    public void visit(PlayController controller) {
+        this.playView.interact(controller);
     }
 
     @Override

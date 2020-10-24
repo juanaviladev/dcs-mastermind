@@ -1,9 +1,9 @@
 package juanavila.mastermind.views;
 
-import juanavila.mastermind.controllers.Controller;
+import juanavila.mastermind.controllers.AcceptorController;
 
 public abstract class MastermindView {
 
-    public abstract void interact(Controller controller);
+    public abstract void interact(AcceptorController controller);
 
 }
