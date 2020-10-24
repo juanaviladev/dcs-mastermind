@@ -173,5 +173,20 @@ class mastermind.models.GameRegistry {
    ~ isUndoable(): boolean
    ~ isRedoable(): boolean
 }
+mastermind.models.GameRegistry *--> mastermind.models.GameMemento
+mastermind.models.GameRegistry --> mastermind.models.Mastermind
+
+class mastermind.models.Mastermind {
+   ~ createMemento(): GameMemento
+   ~ restore(GameMemento): void
+}
+mastermind.models.Mastermind ..> mastermind.models.GameMemento
+
+class mastermind.models.GameMemento {
+   - proposedCombinations: List<ProposedCombination>
+   - results: List<Result>
+   - attempts: int
+   ~ GameMemento(proposedCombinations, results, attempts)
+}
 
 @enduml
