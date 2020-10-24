@@ -1,10 +1,10 @@
 package juanavila.mastermind.controllers;
 
-import juanavila.mastermind.models.Mastermind;
+import juanavila.mastermind.models.Session;
 
-public class StartController extends Controller {
-    public StartController(Mastermind game, State state) {
-        super(game,state);
+public class StartController extends Controller implements AcceptorController {
+    public StartController(Session session) {
+        super(session);
     }
 
     @Override

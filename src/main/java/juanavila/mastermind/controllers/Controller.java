@@ -8,6 +8,14 @@ public abstract class Controller {
 
 	Controller(Session session) {
 		this.session = session;
-  }
+    }
+
+    public void next() {
+        this.session.next();
+    }
+
+    public void reset() {
+        this.session.restart();
+    }
 
 }

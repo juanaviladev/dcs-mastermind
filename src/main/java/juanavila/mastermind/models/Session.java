@@ -9,9 +9,6 @@ public class Session {
     public Session() {
         this.state = new State();
         this.mastermind = new Mastermind();
-    }
-
-    public void x() {
         this.registry = new GameRegistry(this.mastermind);
     }
 
@@ -35,12 +32,41 @@ public class Session {
         return this.mastermind.isFinished();
     }
 
-    public void reset() {
+    public void restart() {
         this.mastermind.restart();
         this.state.reset();
     }
 
     public StateValue getValue() {
         return this.state.getValue();
+    }
+
+    public boolean isWinner() {
+        return this.mastermind.isWinner();
+    }
+
+    public boolean isLooser() {
+        return this.mastermind.isLooser();
+    }
+
+    public ProposedCombination getProposedCombination(int position) {
+        return this.mastermind.getProposedCombination(position);
+    }
+
+    public Result getResult(int position) {
+        return this.mastermind.getResult(position);
+    }
+
+    public void next() {
+        this.state.next();
+    }
+
+    public void addProposedCombination(ProposedCombination combination) {
+        this.mastermind.addProposedCombination(combination);
+        this.registry.register();
+    }
+
+    public int getAttempts() {
+        return this.mastermind.getAttempts();
     }
 }

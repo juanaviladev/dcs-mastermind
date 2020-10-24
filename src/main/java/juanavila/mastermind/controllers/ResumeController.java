@@ -1,11 +1,11 @@
 package juanavila.mastermind.controllers;
 
-import juanavila.mastermind.models.Mastermind;
+import juanavila.mastermind.models.Session;
 
-public class ResumeController extends Controller {
+public class ResumeController extends Controller implements AcceptorController {
 
-    public ResumeController(Mastermind game, State state) {
-        super(game, state);
+    public ResumeController(Session session) {
+        super(session);
     }
 
     @Override
@@ -15,7 +15,7 @@ public class ResumeController extends Controller {
 
     public void resume(boolean newGame) {
         if (newGame) {
-            this.game.clear();
+            this.session.restart();
             reset();
         } else {
             next();

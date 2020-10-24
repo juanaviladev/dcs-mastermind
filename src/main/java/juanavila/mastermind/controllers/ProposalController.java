@@ -1,13 +1,11 @@
 package juanavila.mastermind.controllers;
 
-import juanavila.mastermind.models.Mastermind;
-import juanavila.mastermind.models.ProposedCombination;
-import juanavila.mastermind.models.Result;
+import juanavila.mastermind.models.*;
 
-public class ProposalController extends Controller {
+public class ProposalController extends Controller implements AcceptorController {
 
-	public ProposalController(Mastermind game, State state) {
-		super(game, state);
+	public ProposalController(Session session) {
+		super(session);
 	}
 
 	@Override
@@ -16,30 +14,30 @@ public class ProposalController extends Controller {
 	}
 
 	public int getAttempts() {
-    	return this.game.getAttempts();
+    	return this.session.getAttempts();
 	}
 
 	public void addProposedCombination(ProposedCombination combination) {
-		this.game.addProposedCombination(combination);
-		if(this.game.isFinished()) {
+		this.session.addProposedCombination(combination);
+		if(this.session.isFinished()) {
 			next();
 		}
 	}
 
 	public boolean isWinner() {
-		return this.game.isWinner();
+		return this.session.isWinner();
 	}
 
 	public boolean isLooser() {
-		return this.game.isLooser();
+		return this.session.isLooser();
 	}
 
 	public ProposedCombination getProposedCombination(int position) {
-		return this.game.getProposedCombination(position);
+		return this.session.getProposedCombination(position);
 	}
 
 	public Result getResult(int position) {
-		return this.game.getResult(position);
+		return this.session.getResult(position);
 	}
 
 }
