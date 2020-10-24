@@ -7,10 +7,13 @@ public enum MessageView {
 	SECRET("*"),
 	RESUME("Do you want to continue"),
 	RESULT(" --> #blacks blacks and #whites whites"),
-	PROPOSED_COMBINATION("Propose a combination: "),
+	PROPOSE_COMBINATION("Propose a combination"),
 	TITLE("----- MASTERMIND -----"),
 	WINNER("You've won!!! ;-)"),
-	LOOSER("You've lost!!! :-(");
+	LOOSER("You've lost!!! :-("),
+	SEPARATOR("\n"),
+	UNDO_COMMAND("Undo previous action"),
+	REDO_COMMAND("Redo previous action");
 
 	private String message;
 	
@@ -36,4 +39,7 @@ public enum MessageView {
 		this.console.writeln(this.message.replaceFirst("#blacks", "" + blacks).replaceFirst("#whites", "" + whites));
 	}
 
+	public String getTitle() {
+		return this.message;
+	}
 }
