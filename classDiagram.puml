@@ -152,6 +152,19 @@ mastermind.controllers.Controller <|-- mastermind.controllers.PlayController
 mastermind.controllers.PlayController *--> mastermind.controllers.UndoController
 mastermind.controllers.PlayController *--> mastermind.controllers.RedoController
 
+class mastermind.controllers.RedoController {
+    ~ redo(): void
+    ~ isRedoable(): boolean
+}
+mastermind.controllers.Controller <|-- mastermind.controllers.RedoController
+
+class mastermind.controllers.UndoController {
+    ~ undo(): void
+    ~ isUndoable(): boolean
+}
+mastermind.controllers.Controller <|-- mastermind.controllers.UndoController
+
+
 class mastermind.models.Session {
     - mastermind: Mastermind
     - registry: GameRegistry
