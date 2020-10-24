@@ -3,13 +3,13 @@ package juanavila.mastermind.views.console;
 import juanavila.mastermind.controllers.*;
 import juanavila.mastermind.views.MastermindView;
 
-public class ConsoleView extends MastermindView implements ControllerVisitor {
+public class View extends MastermindView implements ControllerVisitor {
 
     private StartView startView;
     private ProposalView proposalView;
     private ResumeView resumeView;
 
-    public ConsoleView() {
+    public View() {
         this.startView = new StartView();
         this.proposalView = new ProposalView();
         this.resumeView = new ResumeView();

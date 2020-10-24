@@ -1,14 +1,13 @@
 package juanavila.mastermind;
 
-import juanavila.mastermind.controllers.Logic;
 import juanavila.mastermind.views.MastermindView;
-import juanavila.mastermind.views.console.ConsoleView;
+import juanavila.mastermind.views.console.View;
 
 public class ConsoleMastermind extends MastermindStarter {
 
     @Override
-    MastermindView createView(Logic logic) {
-        return new ConsoleView();
+    MastermindView createView() {
+        return new View();
     }
 
     public static void main(String[] args) {

@@ -1,14 +1,13 @@
 package juanavila.mastermind;
 
-import juanavila.mastermind.controllers.Logic;
 import juanavila.mastermind.views.MastermindView;
-import juanavila.mastermind.views.graphics.GraphicsView;
+import juanavila.mastermind.views.graphics.View;
 
 public class GraphicsMastermind extends MastermindStarter {
 
     @Override
-    MastermindView createView(Logic logic) {
-        return new GraphicsView();
+    MastermindView createView() {
+        return new View();
     }
 
     public static void main(String[] args) {
