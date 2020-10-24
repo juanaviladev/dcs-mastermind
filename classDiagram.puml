@@ -1,4 +1,137 @@
 @startuml
 
+top to bottom direction
+
+class mastermind.views.ColorView {
+    ~ write(): void
+}
+utils.WithConsoleView <|--- mastermind.views.ColorView
+
+class mastermind.views.SecretCombinationView {
+    ~ playController: ProposalController
+    ~ SecretCombinationView(ProposalController)
+    ~ writeln(): void
+}
+utils.WithConsoleView <|--- mastermind.views.SecretCombinationView
+mastermind.views.SecretCombinationView ..> mastermind.views.MessageView
+mastermind.views.SecretCombinationView --> mastermind.controllers.ProposalController
+mastermind.views.SecretCombinationView ..> mastermind.views.MessageView
+
+class mastermind.views.ErrorView {
+    + {static} MESSAGES: String[]
+    # error: Error
+    + ErrorView(Error)
+    ~ writeln(): void
+}
+
+class mastermind.views.ProposalView {
+    ~ ProposalView()
+    ~ interact(controller: PlayController)
+}
+mastermind.views.ProposalView ..> mastermind.controllers.PlayController
+mastermind.views.ProposalView ..> mastermind.views.SecretCombinationView
+mastermind.views.ProposalView ..> mastermind.views.ProposedCombination
+mastermind.views.ProposalView ..> mastermind.views.ProposedCombinationView
+mastermind.views.ProposalView ..> mastermind.views.ResultView
+
+class mastermind.views.ProposedCombinationView {
+    ~ ProposedCombinationView(combination: ProposedCombination)
+    ~ void write()
+    ~ void read()
+}
+
+enum mastermind.views.MessageView {
+    + ATTEMPTS
+   	+ SECRET
+   	+ RESUME
+   	+ RESULT
+   	+ PROPOSED_COMBINATION
+   	+ TITLE
+   	+ WINNER
+   	+ LOOSER
+    - message: String
+    - MessageView(String)
+}
+
+class mastermind.views.Command {
+    # playController: ProposalController
+    - title: String
+    # Command(String, ProposalController)
+    # {abstract} execute(): void
+    # {abstract} isActive(): boolean
+    ~ getTitle(): String
+}
+
+class mastermind.views.RedoCommand {
+    ~ RedoCommand(controller: PlayController)
+}
+mastermind.views.Command <|-- mastermind.views.RedoCommand
+
+class mastermind.views.UndoCommand {
+    ~ UndoCommand(controller: PlayController)
+}
+mastermind.views.Command <|-- mastermind.views.UndoCommand
+mastermind.views.UndoCommand ..> mastermind.views.MessageView
+mastermind.views.UndoCommand ..> mastermind.controllers.PlayController
+mastermind.views.UndoCommand ..> mastermind.views.GameView
+
+class mastermind.views.ResumeCommand {
+    ~ ResumeCommand(controller: ResumeController)
+}
+mastermind.views.Command <|-- mastermind.views.ResumeCommand
+mastermind.views.ResumeCommand ..> mastermind.controllers.PlayController
+mastermind.views.ProposalCommand ..> mastermind.views.MessageView
+mastermind.views.ProposalCommand ..> mastermind.views.YesNoDialog
+
+class mastermind.views.PlayMenu {
+    ~ PlayMenu(controller: PlayController)
+}
+utils.Menu <|--- mastermind.views.PlayMenu
+mastermind.views.PlayMenu ..> mastermind.controllers.PlayController
+mastermind.views.PlayMenu *--> mastermind.views.ProposalCommand
+mastermind.views.PlayMenu *--> mastermind.views.UndoCommand
+mastermind.views.PlayMenu *--> mastermind.views.RedoCommand
+
+class mastermind.views.PlayView {
+    + interact(controller: ProposalController): void
+}
+mastermind.views.PlayView ..> mastermind.controllers.ProposalController
+mastermind.views.PlayView ..> mastermind.views.PlayMenu
+
+class mastermind.views.ResultView {
+    ~ writeln(int): void
+}
+utils.WithConsoleView <|-- mastermind.views.ResultView
+mastermind.views.ResultView ..> mastermind.views.MessageView
+
+class mastermind.views.ResumeView {
+    ~ interact(controller: ResumeController): void
+}
+mastermind.views.ResumeView ..> mastermind.controllers.ResumeController
+mastermind.views.ResumeView ..> utils.YesNoDialog
+mastermind.views.ResumeView ..> mastermind.views.MessageView
+
+class mastermind.views.StartView {
+    ~ interact(controller: StartController): void
+}
+utils.WithConsoleView <|-- mastermind.views.StartView
+mastermind.views.StartView ..> mastermind.controllers.StartController
+mastermind.views.StartView ..> mastermind.views.MessageView
+
+class mastermind.views.View {
+    - startView: StartView
+    - proposalView: ProposalView
+    - resumeView: ResumeView
+    + View()
+    + interact(controller: AcceptorController): void
+    + visit(controller: StartController): void
+    + visit(controller: ProposalController): void
+    + visit(controller: ResumeController): void
+}
+mastermind.controllers.ControllersVisitor <|-- mastermind.views.View
+mastermind.views.View ..> mastermind.controllers.AcceptorController
+mastermind.views.View *--> mastermind.views.StartView
+mastermind.views.View *--> mastermind.views.PlayView
+mastermind.views.View *--> mastermind.views.ResumeView
 
 @enduml
