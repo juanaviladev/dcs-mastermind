@@ -216,4 +216,83 @@ class mastermind.controllers.StartController {
 mastermind.controllers.AcceptorController <|.. mastermind.controllers.StartController
 mastermind.controllers.Controller <|-- mastermind.controllers.StartController
 
+class mastermind.distributed.MastermindServer {
+    - dispatcherRegistry: DispatcherRegistry
+    - logic: ServerLogic
+    + {static} main() : void
+}
+mastermind.distributed.MastermindServer <|-- mastermind.MastermindStarter
+mastermind.distributed.MastermindServer *--> mastermind.distributed.dispatchers.DispatcherRegistry
+mastermind.distributed.MastermindServer *--> mastermind.distributed.ServerLogic
+
+class mastermind.distributed.ServerLogic {
+    + createDispatchers(DispatcherRegistry): void
+}
+mastermind.distributed.MastermindServer ..> mastermind.distributed.dispatchers.FrameType
+
+class mastermind.distributed.dispatchers.DispatcherRegistry {
+    - tcpip: TCPIP
+    - dispatchers: Map<FrameType, Dispatcher>
+    + add(FrameType, Dispatcher): void
+    + serve(): void
+}
+
+class mastermind.distributed.MastermindClient {
+    - logic: LogicProxy
+    # play() : void
+    + {static} main() : void
+}
+mastermind.MastermindStarter <|-- mastermind.distributed.MastermindClient
+mastermind.distributed.MastermindClient *--> mastermind.distributed.LogicProxy
+
+class mastermind.distributed.LogicProxy {
+    - tcpip: TCPIP
+    + close(): void
+}
+mastermind.distributed.LogicProxy *--> mastermind.distributed.SessionProxy
+mastermind.distributed.LogicProxy *--> mastermind.distributed.dispatchers.TCPIP
+mastermind.distributed.LogicProxy ..> mastermind.distributed.StartControllerProxy
+mastermind.distributed.LogicProxy ..> mastermind.distributed.PlayControllerProxy
+mastermind.distributed.LogicProxy ..> mastermind.distributed.ResumeControllerProxy
+
+class mastermind.distributed.SessionProxy {
+    - tcpip: TCPIP
+    + getValueState() : StateValue
+}
+mastermind.distributed.SessionProxy ..> mastermind.models.StateValue
+mastermind.distributed.SessionProxy ..> mastermind.distributed.dispatchers.FrameType
+
+class mastermind.distributed.StartControllerProxy {
+    - tcpip: TCPIP
+}
+mastermind.controllers.StartController <|-- mastermind.distributed.StartControllerProxy
+mastermind.distributed.StartControllerProxy ..> mastermind.distributed.dispatchers.FrameType
+
+class mastermind.distributed.PlayControllerProxy {
+    - tcpip: TCPIP
+}
+mastermind.controllers.PlayController <|-- mastermind.distributed.PlayControllerProxy
+mastermind.distributed.PlayControllerProxy ..> mastermind.distributed.dispatchers.FrameType
+
+class mastermind.distributed.ResumeControllerProxy {
+    - tcpip: TCPIP
+}
+mastermind.controllers.ResumeController <|-- mastermind.distributed.ResumeControllerProxy
+mastermind.distributed.ResumeControllerProxy ..> mastermind.distributed.dispatchers.FrameType
+
+enum mastermind.distributed.dispatchers.FrameType {
+    START,
+	STATE,
+	UNDO,
+	REDO,
+	UNDOABLE,
+	REDOABLE,
+	PROPOSE,
+	CLOSE,
+	FINISHED,
+	CONTINUE_STATE,
+	NEW_GAME
+}
+
+
 @enduml
