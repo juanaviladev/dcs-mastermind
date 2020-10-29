@@ -2,10 +2,12 @@ package juanavila.mastermind.controllers;
 
 import juanavila.mastermind.models.*;
 
-public class ProposalController extends Controller {
+public class ProposalController implements Controller {
 
-	public ProposalController(Session session) {
-		super(session);
+	private InMemorySession session;
+
+	public ProposalController(InMemorySession session) {
+		this.session = session;
 	}
 
 	public int getAttempts() {
@@ -15,7 +17,7 @@ public class ProposalController extends Controller {
 	public void addProposedCombination(ProposedCombination combination) {
 		this.session.addProposedCombination(combination);
 		if(this.session.isFinished()) {
-			next();
+			session.next();
 		}
 	}
 

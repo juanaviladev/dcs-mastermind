@@ -2,67 +2,29 @@ package juanavila.mastermind.controllers;
 
 import juanavila.mastermind.models.ProposedCombination;
 import juanavila.mastermind.models.Result;
-import juanavila.mastermind.models.Session;
 
-public class PlayController extends Controller implements AcceptorController {
+public interface PlayController extends AcceptorController {
 
-    private ProposalController proposalController;
-    private UndoController undoController;
-    private RedoController redoController;
+    void undo();
 
-    public PlayController(Session session) {
-        super(session);
-        this.proposalController = new ProposalController(session);
-        this.undoController = new UndoController(session);
-        this.redoController = new RedoController(session);
-    }
+    boolean isUndoable();
 
-    public void undo() {
-        this.undoController.undo();
-    }
+    void redo();
 
-    public boolean isUndoable() {
-        return this.undoController.isUndoable();
-    }
+    boolean isRedoable();
 
-    public void redo() {
-        this.redoController.redo();
-    }
+    boolean isFinished();
 
-    public boolean isRedoable() {
-        return this.redoController.isRedoable();
-    }
+    void addProposedCombination(ProposedCombination proposedCombination);
 
-    public boolean isFinished() {
-        return this.proposalController.isFinished();
-    }
+    int getAttempts();
 
-    public void addProposedCombination(ProposedCombination proposedCombination) {
-        this.proposalController.addProposedCombination(proposedCombination);
-    }
+    ProposedCombination getProposedCombination(int pos);
 
-    public int getAttempts() {
-        return this.proposalController.getAttempts();
-    }
+    Result getResult(int pos);
 
-    public ProposedCombination getProposedCombination(int pos) {
-        return this.proposalController.getProposedCombination(pos);
-    }
+    boolean isWinner();
 
-    public Result getResult(int pos) {
-        return this.proposalController.getResult(pos);
-    }
+    boolean isLooser();
 
-    public boolean isWinner() {
-        return this.proposalController.isWinner();
-    }
-
-    @Override
-    public void accept(ControllerVisitor controllerVisitor) {
-        controllerVisitor.visit(this);
-    }
-
-    public boolean isLooser() {
-        return this.proposalController.isLooser();
-    }
 }

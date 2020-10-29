@@ -1,11 +1,13 @@
 package juanavila.mastermind.controllers;
 
-import juanavila.mastermind.models.Session;
+import juanavila.mastermind.models.InMemorySession;
 
-public class RedoController extends Controller {
+public class RedoController implements Controller {
 
-  RedoController(Session session) {
-    super(session);
+  private InMemorySession session;
+
+  RedoController(InMemorySession session) {
+    this.session = session;
   }
 
   void redo() {

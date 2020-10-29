@@ -6,19 +6,17 @@ import juanavila.mastermind.models.StateValue;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Logic {
+public abstract class Logic {
 
-    private Session session;
+    protected Session session;
     private Map<StateValue, AcceptorController> controllers;
 
     public Logic() {
-        this.session = new Session();
         this.controllers = new HashMap<>();
+    }
 
-        this.controllers.put(StateValue.START, new StartController(this.session));
-        this.controllers.put(StateValue.PROPOSAL, new PlayController(this.session));
-        this.controllers.put(StateValue.RESUME, new ResumeController(this.session));
-        this.controllers.put(StateValue.EXIT, null);
+    protected void addController(StateValue state, AcceptorController controller) {
+        this.controllers.put(state,controller);
     }
 
     public AcceptorController getController() {

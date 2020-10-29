@@ -1,19 +1,21 @@
 package juanavila.mastermind.controllers;
 
-import juanavila.mastermind.models.Session;
+import juanavila.mastermind.models.InMemorySession;
 
-public class UndoController extends Controller {
+public class UndoController implements Controller {
 
-  UndoController(Session session) {
-    super(session);
-  }
+    private InMemorySession session;
 
-  void undo() {
-    this.session.undo();
-  }
+    UndoController(InMemorySession session) {
+        this.session = session;
+    }
 
-  boolean isUndoable() {
-    return this.session.isUndoable();
-  }
+    void undo() {
+        this.session.undo();
+    }
+
+    boolean isUndoable() {
+        return this.session.isUndoable();
+    }
 
 }
