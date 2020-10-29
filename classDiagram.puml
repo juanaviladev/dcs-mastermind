@@ -140,6 +140,7 @@ class mastermind.controllers.UndoController {
 mastermind.controllers.Controller <|-- mastermind.controllers.UndoController
 
 class mastermind.controllers.ProposalController {
+    ~ ProposalController(InMemorySession)
     ~ getAttempts() : int
     ~ addProposedCombination() : void
     ~ isWinner() : boolean
@@ -149,6 +150,7 @@ class mastermind.controllers.ProposalController {
     ~ getResult(pos: int) : Result
 }
 mastermind.controllers.Controller <|-- mastermind.controllers.ProposalController
+mastermind.controllers.ProposalController --> mastermind.models.InMemorySession
 
 interface mastermind.controllers.PlayController {
     ~ PlayController()
@@ -300,7 +302,7 @@ class mastermind.distributed.MastermindClient {
 mastermind.MastermindStarter <|-- mastermind.distributed.MastermindClient
 mastermind.distributed.MastermindClient *--> mastermind.distributed.LogicProxy
 
-class mastermind.controllers.Logic {
+abstract class mastermind.controllers.Logic {
     - session: Session
     - controllers: Map<StateValue, AcceptorController>
     # Logic(Session)
@@ -323,7 +325,7 @@ mastermind.distributed.LogicProxy ..> mastermind.distributed.ResumeControllerPro
 class mastermind.controllers.LogicImplementation {
     # LogicImplementation()
 }
-mastermind.controllers.Logic <|-- mastermind.distributed.LogicProxy
+mastermind.controllers.Logic <|-- mastermind.controllers.LogicImplementation
 mastermind.controllers.LogicImplementation *--> mastermind.controllers.PlayControllerImplementation
 mastermind.controllers.LogicImplementation *--> mastermind.controllers.StartControllerImplementation
 mastermind.controllers.LogicImplementation *--> mastermind.controllers.ResumeControllerImplementation
