@@ -7,7 +7,7 @@ class StartView extends WithConsoleView {
 
 	void interact(StartController startController) {
 		MessageView.TITLE.writeln();
-		startController.next();
+		startController.start();
 	}
 
 }
