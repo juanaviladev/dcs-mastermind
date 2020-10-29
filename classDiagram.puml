@@ -116,15 +116,16 @@ mastermind.views.View *--> mastermind.views.StartView
 mastermind.views.View *--> mastermind.views.PlayView
 mastermind.views.View *--> mastermind.views.ResumeView
 
-interface mastermind.controllers.AcceptorController { }
-interface mastermind.controllers.ControllerVisitor { }
-
-abstract class mastermind.controllers.Controller {
-    ~ session: Session
-    + View(Session)
+interface mastermind.controllers.AcceptorController {
+    + {abstract} accept(ControllerVisitor) : void
 }
-mastermind.controllers.PlayController ---> mastermind.models.Session
-mastermind.controllers.Controller *--> mastermind.models.Session
+interface mastermind.controllers.ControllerVisitor {
+     + {abstract} visit(StartController) : void
+     + {abstract} visit(PlayController) : void
+     + {abstract} visit(ResumeController) : void
+}
+
+interface mastermind.controllers.Controller { }
 
 class mastermind.controllers.RedoController {
     ~ redo(): void
@@ -149,25 +150,39 @@ class mastermind.controllers.ProposalController {
 }
 mastermind.controllers.Controller <|-- mastermind.controllers.ProposalController
 
-class mastermind.controllers.PlayController {
-    ~ undo(): void
-    ~ isUndoable(): boolean
+interface mastermind.controllers.PlayController {
+    ~ PlayController()
+    + {abstract} undo(): void
+    + {abstract} isUndoable(): boolean
+    + {abstract} redo(): void
+    + {abstract} isRedoable(): boolean
+    + {abstract} isFinished(): boolean
+    + {abstract} addProposedCombination(ProposedCombination): void
+    + {abstract} getAttempts(): int
+    + {abstract} getProposedCombination(pos): ProposedCombination
+    + {abstract} getResult(pos): Result
+    + {abstract} isWinner(): boolean
+    + {abstract} isLooser(): boolean
 }
 mastermind.controllers.Controller <|-- mastermind.controllers.PlayController
 mastermind.controllers.AcceptorController <|.. mastermind.controllers.PlayController
-mastermind.controllers.PlayController *--> mastermind.controllers.UndoController
-mastermind.controllers.PlayController *--> mastermind.controllers.RedoController
-mastermind.controllers.PlayController *--> mastermind.controllers.ProposalController
 
-class mastermind.models.Session {
+interface mastermind.models.Session {
+    + Session()
+    + {abstract} getValueState(): StateValue
+}
+mastermind.models.Session *--> mastermind.models.StateValue
+
+class mastermind.models.InMemorySession {
     - mastermind: Mastermind
     - registry: GameRegistry
     - state: State
-    + Session()
+    + InMemorySession()
+    + getValueState(): StateValue
 }
-mastermind.models.Session *--> mastermind.models.Mastermind
-mastermind.models.Session *--> mastermind.models.GameRegistry
-mastermind.models.Session *--> mastermind.models.State
+mastermind.models.InMemorySession *--> mastermind.models.Mastermind
+mastermind.models.InMemorySession *--> mastermind.models.GameRegistry
+mastermind.models.InMemorySession *--> mastermind.models.State
 
 class mastermind.models.GameRegistry {
    - mementos: List<GameMemento>
@@ -202,19 +217,58 @@ class mastermind.views.BoardView {
 mastermind.views.BoardView --> mastermind.controllers.PlayController
 mastermind.views.BoardView ..> mastermind.views.ResultView
 
-class mastermind.controllers.ResumeController {
-   ~ ResumeController(Session)
-   ~ resume(newGame): void
+interface mastermind.controllers.ResumeController {
+   ~ ResumeController()
+   + {abstract} resume(newGame): void
+   + accept(ControllerVisitor) : void
 }
 mastermind.controllers.AcceptorController <|.. mastermind.controllers.ResumeController
-mastermind.controllers.Controller <|-- mastermind.controllers.ResumeController
 mastermind.controllers.ResumeController ..> mastermind.controllers.ControllerVisitor
 
-class mastermind.controllers.StartController {
-   ~ StartController(Session)
+class mastermind.distributed.ResumeControllerImplementation {
+    - session: InMemorySession
+    ~ ResumeControllerProxy(InMemorySession)
+    + accept(ControllerVisitor) : void
+    + start(): void
+ }
+mastermind.controllers.ResumeController <|.. mastermind.controllers.ResumeControllerImplementation
+mastermind.controllers.ResumeControllerImplementation *--> mastermind.models.InMemorySession
+
+class mastermind.distributed.ResumeControllerProxy {
+   - connection: RemoteConnection
+   ~ ResumeControllerProxy()
+   + accept(ControllerVisitor) : void
+   + resume(newGame: boolean): void
+}
+mastermind.controllers.StartController <|.. mastermind.distributed.StartControllerProxy
+mastermind.controllers.StartController ..> mastermind.controllers.ControllerVisitor
+
+
+interface mastermind.controllers.StartController {
+   ~ StartController()
+   + accept(ControllerVisitor) : void
+   + {abstract} start(): void
 }
 mastermind.controllers.AcceptorController <|.. mastermind.controllers.StartController
-mastermind.controllers.Controller <|-- mastermind.controllers.StartController
+mastermind.controllers.StartController ..> mastermind.controllers.ControllerVisitor
+
+class mastermind.distributed.StartControllerImplementation {
+   - session: InMemorySession
+   ~ StartControllerProxy(InMemorySession)
+   + accept(ControllerVisitor) : void
+   + start(): void
+}
+mastermind.controllers.StartController <|.. mastermind.controllers.StartControllerImplementation
+mastermind.controllers.StartControllerImplementation *--> mastermind.models.InMemorySession
+
+class mastermind.distributed.StartControllerProxy {
+   - connection: RemoteConnection
+   ~ StartControllerProxy()
+   + accept(ControllerVisitor) : void
+   + start(): void
+}
+mastermind.controllers.StartController <|.. mastermind.distributed.StartControllerProxy
+mastermind.controllers.StartController ..> mastermind.controllers.ControllerVisitor
 
 class mastermind.distributed.MastermindServer {
     - dispatcherRegistry: DispatcherRegistry
@@ -231,11 +285,12 @@ class mastermind.distributed.ServerLogic {
 mastermind.distributed.MastermindServer ..> mastermind.distributed.dispatchers.FrameType
 
 class mastermind.distributed.dispatchers.DispatcherRegistry {
-    - tcpip: TCPIP
+    - tcpip: RemoteConnection
     - dispatchers: Map<FrameType, Dispatcher>
     + add(FrameType, Dispatcher): void
     + serve(): void
 }
+mastermind.distributed.dispatchers.DispatcherRegistry *--> mastermind.distributed.dispatchers.RemoteConnection
 
 class mastermind.distributed.MastermindClient {
     - logic: LogicProxy
@@ -245,40 +300,136 @@ class mastermind.distributed.MastermindClient {
 mastermind.MastermindStarter <|-- mastermind.distributed.MastermindClient
 mastermind.distributed.MastermindClient *--> mastermind.distributed.LogicProxy
 
+class mastermind.controllers.Logic {
+    - session: Session
+    - controllers: Map<StateValue, AcceptorController>
+    # Logic(Session)
+    + getController(): AcceptorController
+}
+mastermind.controllers.Logic ..> mastermind.controllers.AcceptorController
+mastermind.controllers.Logic ..> mastermind.models.Session
+
 class mastermind.distributed.LogicProxy {
-    - tcpip: TCPIP
+    - connection: RemoteConnection
     + close(): void
 }
+mastermind.controllers.Logic <|-- mastermind.distributed.LogicProxy
+mastermind.distributed.LogicProxy *--> mastermind.distributed.dispatchers.RemoteConnection
 mastermind.distributed.LogicProxy *--> mastermind.distributed.SessionProxy
-mastermind.distributed.LogicProxy *--> mastermind.distributed.dispatchers.TCPIP
 mastermind.distributed.LogicProxy ..> mastermind.distributed.StartControllerProxy
 mastermind.distributed.LogicProxy ..> mastermind.distributed.PlayControllerProxy
 mastermind.distributed.LogicProxy ..> mastermind.distributed.ResumeControllerProxy
 
+class mastermind.controllers.LogicImplementation {
+    # LogicImplementation()
+}
+mastermind.controllers.Logic <|-- mastermind.distributed.LogicProxy
+mastermind.controllers.LogicImplementation *--> mastermind.controllers.PlayControllerImplementation
+mastermind.controllers.LogicImplementation *--> mastermind.controllers.StartControllerImplementation
+mastermind.controllers.LogicImplementation *--> mastermind.controllers.ResumeControllerImplementation
+mastermind.controllers.LogicImplementation ..> mastermind.models.StateValue
+
 class mastermind.distributed.SessionProxy {
-    - tcpip: TCPIP
+    - connection: RemoteConnection
     + getValueState() : StateValue
 }
+mastermind.models.Session <|.. mastermind.distributed.SessionProxy
 mastermind.distributed.SessionProxy ..> mastermind.models.StateValue
 mastermind.distributed.SessionProxy ..> mastermind.distributed.dispatchers.FrameType
+mastermind.distributed.SessionProxy ..> mastermind.models.StateValue
+mastermind.distributed.SessionProxy --> mastermind.distributed.dispatchers.RemoteConnection
 
 class mastermind.distributed.StartControllerProxy {
-    - tcpip: TCPIP
+    - tcpip: RemoteConnection
 }
 mastermind.controllers.StartController <|-- mastermind.distributed.StartControllerProxy
 mastermind.distributed.StartControllerProxy ..> mastermind.distributed.dispatchers.FrameType
 
 class mastermind.distributed.PlayControllerProxy {
-    - tcpip: TCPIP
+    - tcpip: RemoteConnection
+    ~ PlayControllerProxy(RemoteConnection)
+    + undo(): void
+    + isUndoable(): boolean
+    + redo(): void
+    + isRedoable(): boolean
+    + isFinished(): boolean
+    + addProposedCombination(ProposedCombination): void
+    + getAttempts(): int
+    + getProposedCombination(pos): ProposedCombination
+    + getResult(pos): Result
+    + isWinner(): boolean
+    + isLooser(): boolean
 }
-mastermind.controllers.PlayController <|-- mastermind.distributed.PlayControllerProxy
+mastermind.distributed.PlayControllerProxy --> mastermind.distributed.dispatchers.RemoteConnection
+mastermind.controllers.AcceptorController <|.. mastermind.distributed.PlayControllerProxy
+mastermind.controllers.PlayController <|.. mastermind.distributed.PlayControllerProxy
 mastermind.distributed.PlayControllerProxy ..> mastermind.distributed.dispatchers.FrameType
 
 class mastermind.distributed.ResumeControllerProxy {
-    - tcpip: TCPIP
+    - tcpip: RemoteConnection
 }
 mastermind.controllers.ResumeController <|-- mastermind.distributed.ResumeControllerProxy
 mastermind.distributed.ResumeControllerProxy ..> mastermind.distributed.dispatchers.FrameType
+
+class mastermind.distributed.dispatchers.RemoteConnection {
+    - tcpip: TCPIP
+}
+
+class mastermind.utils.TCPIP {
+
+}
+
+abstract class mastermind.distributed.dispatchers.Dispatcher {
+    # connection: RemoteConnection
+    + {abstract} dispatch(): void
+    + associate(RemoteConnection): void
+}
+mastermind.distributed.dispatchers.Dispatcher --> mastermind.distributed.dispatchers.RemoteConnection
+
+class mastermind.distributed.dispatchers.NextDispatcher {
+    + dispatch(): void
+}
+mastermind.distributed.dispatchers.Dispatcher <|-- mastermind.distributed.dispatchers.NextDispatcher
+
+class mastermind.distributed.dispatchers.ProposalDispatcher {
+    + dispatch(): void
+}
+mastermind.distributed.dispatchers.Dispatcher <|-- mastermind.distributed.dispatchers.ProposalDispatcher
+
+class mastermind.distributed.dispatchers.ResumeDispatcher {
+    + dispatch(): void
+}
+mastermind.distributed.dispatchers.Dispatcher <|-- mastermind.distributed.dispatchers.ResumeDispatcher
+
+class mastermind.distributed.dispatchers.StartDispatcher {
+    + dispatch(): void
+}
+mastermind.distributed.dispatchers.Dispatcher <|-- mastermind.distributed.dispatchers.StartDispatcher
+
+class mastermind.distributed.dispatchers.IsFinishedDispatcher {
+    + dispatch(): void
+}
+mastermind.distributed.dispatchers.Dispatcher <|-- mastermind.distributed.dispatchers.IsFinishedDispatcher
+
+class mastermind.distributed.dispatchers.IsRedoableDispatcher {
+    + dispatch(): void
+}
+mastermind.distributed.dispatchers.Dispatcher <|-- mastermind.distributed.dispatchers.IsRedoableDispatcher
+
+class mastermind.distributed.dispatchers.IsUndoableDispatcher {
+    + dispatch(): void
+}
+mastermind.distributed.dispatchers.Dispatcher <|-- mastermind.distributed.dispatchers.IsUndoableDispatcher
+
+class mastermind.distributed.dispatchers.RedoDispatcher {
+    + dispatch(): void
+}
+mastermind.distributed.dispatchers.Dispatcher <|-- mastermind.distributed.dispatchers.RedoDispatcher
+
+class mastermind.distributed.dispatchers.UndoDispatcher {
+    + dispatch(): void
+}
+mastermind.distributed.dispatchers.Dispatcher <|-- mastermind.distributed.dispatchers.UndoDispatcher
 
 enum mastermind.distributed.dispatchers.FrameType {
     START,
@@ -293,6 +444,5 @@ enum mastermind.distributed.dispatchers.FrameType {
 	CONTINUE_STATE,
 	NEW_GAME
 }
-
 
 @enduml
