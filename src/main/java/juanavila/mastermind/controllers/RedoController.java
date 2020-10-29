@@ -2,7 +2,7 @@ package juanavila.mastermind.controllers;
 
 import juanavila.mastermind.models.InMemorySession;
 
-public class RedoController implements Controller {
+public class RedoController {
 
   private InMemorySession session;
 

@@ -2,7 +2,7 @@ package juanavila.mastermind.controllers;
 
 import juanavila.mastermind.models.*;
 
-public class ProposalController implements Controller {
+public class ProposalController {
 
 	private InMemorySession session;
 
