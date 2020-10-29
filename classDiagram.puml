@@ -166,7 +166,7 @@ interface mastermind.controllers.PlayController {
 }
 mastermind.controllers.AcceptorController <|.. mastermind.controllers.PlayController
 
-class mastermind.controllers.PlayControllerImplementation {
+class mastermind.controllers.implementation.PlayControllerImplementation {
     - session: InMemorySession
     - proposalController: ProposalController
     - redoController: RedoController
@@ -184,11 +184,11 @@ class mastermind.controllers.PlayControllerImplementation {
     + isWinner(): boolean
     + isLooser(): boolean
 }
-mastermind.controllers.PlayController <|.. mastermind.controllers.PlayControllerImplementation
-mastermind.controllers.PlayControllerImplementation --> mastermind.models.InMemorySession
-mastermind.controllers.PlayControllerImplementation *--> mastermind.controllers.ProposalController
-mastermind.controllers.PlayControllerImplementation *--> mastermind.controllers.UndoController
-mastermind.controllers.PlayControllerImplementation *--> mastermind.controllers.RedoController
+mastermind.controllers.PlayController <|.. mastermind.controllers.implementation.PlayControllerImplementation
+mastermind.controllers.implementation.PlayControllerImplementation --> mastermind.models.InMemorySession
+mastermind.controllers.implementation.PlayControllerImplementation *--> mastermind.controllers.ProposalController
+mastermind.controllers.implementation.PlayControllerImplementation *--> mastermind.controllers.UndoController
+mastermind.controllers.implementation.PlayControllerImplementation *--> mastermind.controllers.RedoController
 
 interface mastermind.models.Session {
     + Session()
@@ -248,14 +248,14 @@ interface mastermind.controllers.ResumeController {
 mastermind.controllers.AcceptorController <|.. mastermind.controllers.ResumeController
 mastermind.controllers.ResumeController ..> mastermind.controllers.ControllerVisitor
 
-class mastermind.controllers.ResumeControllerImplementation {
+class mastermind.controllers.implementation.ResumeControllerImplementation {
     - session: InMemorySession
     ~ ResumeControllerImplementation(InMemorySession)
     + accept(ControllerVisitor) : void
     + start(): void
  }
-mastermind.controllers.ResumeController <|.. mastermind.controllers.ResumeControllerImplementation
-mastermind.controllers.ResumeControllerImplementation *--> mastermind.models.InMemorySession
+mastermind.controllers.ResumeController <|.. mastermind.controllers.implementation.ResumeControllerImplementation
+mastermind.controllers.implementation.ResumeControllerImplementation *--> mastermind.models.InMemorySession
 
 class mastermind.distributed.ResumeControllerProxy {
    - connection: RemoteConnection
@@ -281,8 +281,8 @@ class mastermind.distributed.StartControllerImplementation {
    + accept(ControllerVisitor) : void
    + start(): void
 }
-mastermind.controllers.StartController <|.. mastermind.controllers.StartControllerImplementation
-mastermind.controllers.StartControllerImplementation *--> mastermind.models.InMemorySession
+mastermind.controllers.StartController <|.. mastermind.controllers.implementation.StartControllerImplementation
+mastermind.controllers.implementation.StartControllerImplementation *--> mastermind.models.InMemorySession
 
 class mastermind.distributed.StartControllerProxy {
    - connection: RemoteConnection
@@ -343,14 +343,14 @@ mastermind.distributed.LogicProxy ..> mastermind.distributed.StartControllerProx
 mastermind.distributed.LogicProxy ..> mastermind.distributed.PlayControllerProxy
 mastermind.distributed.LogicProxy ..> mastermind.distributed.ResumeControllerProxy
 
-class mastermind.controllers.LogicImplementation {
+class mastermind.controllers.implementation.LogicImplementation {
     # LogicImplementation()
 }
-mastermind.controllers.Logic <|-- mastermind.controllers.LogicImplementation
-mastermind.controllers.LogicImplementation *--> mastermind.controllers.PlayControllerImplementation
-mastermind.controllers.LogicImplementation *--> mastermind.controllers.StartControllerImplementation
-mastermind.controllers.LogicImplementation *--> mastermind.controllers.ResumeControllerImplementation
-mastermind.controllers.LogicImplementation ..> mastermind.models.StateValue
+mastermind.controllers.Logic <|-- mastermind.controllers.implementation.LogicImplementation
+mastermind.controllers.implementation.LogicImplementation *--> mastermind.controllers.implementation.PlayControllerImplementation
+mastermind.controllers.implementation.LogicImplementation *--> mastermind.controllers.implementation.StartControllerImplementation
+mastermind.controllers.implementation.LogicImplementation *--> mastermind.controllers.implementation.ResumeControllerImplementation
+mastermind.controllers.implementation.LogicImplementation ..> mastermind.models.StateValue
 
 class mastermind.distributed.SessionProxy {
     - connection: RemoteConnection
@@ -467,5 +467,21 @@ enum mastermind.distributed.dispatchers.FrameType {
 	CONTINUE_STATE,
 	NEW_GAME
 }
+
+abstract class mastermind.MastermindStarter {
+    - logic: Logic
+    - view: View
+    # {abstract} createLogic(): Logic
+    # play(): void
+}
+mastermind.MastermindStarter --> mastermind.controllers.Logic
+mastermind.MastermindStarter --> mastermind.views.MastermindView
+mastermind.MastermindStarter ..> mastermind.controllers.AcceptorController
+
+class mastermind.MastermindStandalone {
+    + {static} main(): void
+}
+mastermind.MastermindStarter <|-- mastermind.MastermindStandalone
+mastermind.MastermindStarter ..> mastermind.controllers.implementation.LogicImplementation
 
 @enduml
