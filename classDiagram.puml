@@ -248,9 +248,9 @@ interface mastermind.controllers.ResumeController {
 mastermind.controllers.AcceptorController <|.. mastermind.controllers.ResumeController
 mastermind.controllers.ResumeController ..> mastermind.controllers.ControllerVisitor
 
-class mastermind.distributed.ResumeControllerImplementation {
+class mastermind.controllers.ResumeControllerImplementation {
     - session: InMemorySession
-    ~ ResumeControllerProxy(InMemorySession)
+    ~ ResumeControllerImplementation(InMemorySession)
     + accept(ControllerVisitor) : void
     + start(): void
  }
@@ -326,7 +326,7 @@ mastermind.distributed.MastermindClient *--> mastermind.distributed.LogicProxy
 abstract class mastermind.controllers.Logic {
     - session: Session
     - controllers: Map<StateValue, AcceptorController>
-    # Logic(Session)
+    # Logic()
     + getController(): AcceptorController
 }
 mastermind.controllers.Logic ..> mastermind.controllers.AcceptorController
