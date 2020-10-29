@@ -1,5 +1,6 @@
-package juanavila.mastermind.controllers;
+package juanavila.mastermind.controllers.implementation;
 
+import juanavila.mastermind.controllers.*;
 import juanavila.mastermind.models.InMemorySession;
 import juanavila.mastermind.models.ProposedCombination;
 import juanavila.mastermind.models.Result;

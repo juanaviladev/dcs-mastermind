@@ -1,6 +1,6 @@
 package juanavila.mastermind.views.console;
 
-import juanavila.mastermind.controllers.ResumeControllerImplementation;
+import juanavila.mastermind.controllers.implementation.ResumeControllerImplementation;
 import juanavila.utils.YesNoDialog;
 
 class ResumeView {

@@ -6,15 +6,15 @@ public class UndoController {
 
     private InMemorySession session;
 
-    UndoController(InMemorySession session) {
+    public UndoController(InMemorySession session) {
         this.session = session;
     }
 
-    void undo() {
+    public void undo() {
         this.session.undo();
     }
 
-    boolean isUndoable() {
+    public boolean isUndoable() {
         return this.session.isUndoable();
     }
 

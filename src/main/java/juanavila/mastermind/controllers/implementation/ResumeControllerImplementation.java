@@ -1,5 +1,7 @@
-package juanavila.mastermind.controllers;
+package juanavila.mastermind.controllers.implementation;
 
+import juanavila.mastermind.controllers.ControllerVisitor;
+import juanavila.mastermind.controllers.ResumeController;
 import juanavila.mastermind.models.InMemorySession;
 
 public class ResumeControllerImplementation implements ResumeController {

@@ -1,5 +1,6 @@
-package juanavila.mastermind.controllers;
+package juanavila.mastermind.controllers.implementation;
 
+import juanavila.mastermind.controllers.Logic;
 import juanavila.mastermind.models.InMemorySession;
 import juanavila.mastermind.models.StateValue;
 

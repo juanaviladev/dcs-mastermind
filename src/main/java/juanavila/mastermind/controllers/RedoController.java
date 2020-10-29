@@ -6,15 +6,15 @@ public class RedoController {
 
   private InMemorySession session;
 
-  RedoController(InMemorySession session) {
+  public RedoController(InMemorySession session) {
     this.session = session;
   }
 
-  void redo() {
+  public void redo() {
     this.session.redo();
   }
 
-  boolean isRedoable() {
+  public boolean isRedoable() {
     return this.session.isRedoable();
   }
 
