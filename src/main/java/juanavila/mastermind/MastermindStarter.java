@@ -10,9 +10,12 @@ public abstract class MastermindStarter {
     private MastermindView view;
 
     public MastermindStarter() {
-        this.logic = new Logic();
-        this.view = createView();
+        this.logic = this.createLogic();
+        this.view = this.createView();
     }
+
+    protected abstract Logic createLogic();
+    protected abstract MastermindView createView();
 
     void start() {
         AcceptorController controller;
@@ -24,5 +27,4 @@ public abstract class MastermindStarter {
         } while (controller != null);
     }
 
-    abstract MastermindView createView();
 }

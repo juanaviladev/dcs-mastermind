@@ -472,6 +472,7 @@ abstract class mastermind.MastermindStarter {
     - logic: Logic
     - view: View
     # {abstract} createLogic(): Logic
+    # {abstract} createView(): MastermindView
     # play(): void
 }
 mastermind.MastermindStarter --> mastermind.controllers.Logic
