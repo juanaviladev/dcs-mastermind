@@ -2,7 +2,7 @@ package juanavila.mastermind.models;
 
 public enum StateValue {
   START,
-  PROPOSAL,
+  PLAY,
   RESUME,
   EXIT
 }

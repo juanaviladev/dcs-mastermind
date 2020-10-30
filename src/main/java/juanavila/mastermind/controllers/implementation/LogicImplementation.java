@@ -6,11 +6,22 @@ import juanavila.mastermind.models.StateValue;
 
 public class LogicImplementation extends Logic {
 
+    protected StartControllerImplementation startControllerImplementation;
+
+    protected PlayControllerImplementation playControllerImplementation;
+
+    protected ResumeControllerImplementation resumeControllerImplementation;
+
     public LogicImplementation() {
         InMemorySession session = new InMemorySession();
-        this.addController(StateValue.START, new StartControllerImplementation(session));
-        this.addController(StateValue.PROPOSAL, new PlayControllerImplementation(session));
-        this.addController(StateValue.RESUME, new ResumeControllerImplementation(session));
+
+        this.startControllerImplementation = new StartControllerImplementation(session);
+        this.playControllerImplementation = new PlayControllerImplementation(session);
+        this.resumeControllerImplementation = new ResumeControllerImplementation(session);
+
+        this.addController(StateValue.START, this.startControllerImplementation);
+        this.addController(StateValue.PLAY, this.playControllerImplementation);
+        this.addController(StateValue.RESUME, this.resumeControllerImplementation);
         this.addController(StateValue.EXIT, null);
         this.session = session;
     }
