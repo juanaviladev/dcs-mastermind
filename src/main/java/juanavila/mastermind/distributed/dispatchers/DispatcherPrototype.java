@@ -3,15 +3,15 @@ package juanavila.mastermind.distributed.dispatchers;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DispatcherRegistry {
+public class DispatcherPrototype {
 
 	private RemoteConnection connection;
 
 	private Map<FrameType, Dispatcher> dispatcherMap;
 
-	public DispatcherRegistry() {
+	public DispatcherPrototype() {
 		this.connection = RemoteConnection.connectToClient();
-		this.dispatcherMap = new HashMap<FrameType, Dispatcher>();
+		this.dispatcherMap = new HashMap<>();
 	}
 	
 	public void add (FrameType frameType, Dispatcher dispatcher) {
@@ -19,17 +19,13 @@ public class DispatcherRegistry {
 		dispatcher.associate(this.connection);
 	}
 
-	public void dispatch(FrameType frameType) {
-		Dispatcher d = this.dispatcherMap.get(frameType);
-		d.dispatch();
-	}
-
 	public void serve() {
 		FrameType frameType = null;
 		do {
 			frameType = this.connection.receiveFrame();
 			if (frameType != FrameType.CLOSE) {
-				this.dispatch(frameType);
+				Dispatcher d = this.dispatcherMap.get(frameType);
+				d.dispatch();
 			}
 		} while (frameType != FrameType.CLOSE);
 		this.connection.close();

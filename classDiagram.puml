@@ -294,26 +294,26 @@ mastermind.controllers.StartController <|.. mastermind.distributed.StartControll
 mastermind.controllers.StartController ..> mastermind.controllers.ControllerVisitor
 
 class mastermind.distributed.MastermindServer {
-    - dispatcherRegistry: DispatcherRegistry
+    - dispatcherRegistry: DispatcherPrototype
     - logic: ServerLogic
     + {static} main() : void
 }
 mastermind.distributed.MastermindServer <|-- mastermind.MastermindStarter
-mastermind.distributed.MastermindServer *--> mastermind.distributed.dispatchers.DispatcherRegistry
+mastermind.distributed.MastermindServer *--> mastermind.distributed.dispatchers.DispatcherPrototype
 mastermind.distributed.MastermindServer *--> mastermind.distributed.ServerLogic
 
 class mastermind.distributed.ServerLogic {
-    + createDispatchers(DispatcherRegistry): void
+    + createDispatchers(DispatcherPrototype): void
 }
 mastermind.distributed.MastermindServer ..> mastermind.distributed.dispatchers.FrameType
 
-class mastermind.distributed.dispatchers.DispatcherRegistry {
+class mastermind.distributed.dispatchers.DispatcherPrototype {
     - tcpip: RemoteConnection
     - dispatchers: Map<FrameType, Dispatcher>
     + add(FrameType, Dispatcher): void
     + serve(): void
 }
-mastermind.distributed.dispatchers.DispatcherRegistry *--> mastermind.distributed.dispatchers.RemoteConnection
+mastermind.distributed.dispatchers.DispatcherPrototype *--> mastermind.distributed.dispatchers.RemoteConnection
 
 class mastermind.distributed.MastermindClient {
     - logic: LogicProxy

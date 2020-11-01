@@ -9,7 +9,7 @@ import juanavila.mastermind.distributed.dispatchers.undoredo.UndoableDispatcher;
 
 public class LogicServer extends LogicImplementation {
 
-    public void createDispatchers(DispatcherRegistry registry) {
+    public void createDispatchers(DispatcherPrototype registry) {
         registry.add(FrameType.START, new StartDispatcher(this.startControllerImplementation));
         registry.add(FrameType.STATE, new StateDispatcher(this.session));
         registry.add(FrameType.UNDO, new UndoDispatcher(this.playControllerImplementation));

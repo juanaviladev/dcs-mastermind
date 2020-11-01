@@ -1,21 +1,21 @@
 package juanavila.mastermind.distributed;
 
-import juanavila.mastermind.distributed.dispatchers.DispatcherRegistry;
+import juanavila.mastermind.distributed.dispatchers.DispatcherPrototype;
 
 public class MastermindServer {
 
-	private DispatcherRegistry dispatcherRegistry;
+	private DispatcherPrototype dispatcherPrototype;
 
 	private LogicServer logic;
 
 	private MastermindServer() {
-		this.dispatcherRegistry = new DispatcherRegistry();
+		this.dispatcherPrototype = new DispatcherPrototype();
 		this.logic = new LogicServer();
-		this.logic.createDispatchers(this.dispatcherRegistry);
+		this.logic.createDispatchers(this.dispatcherPrototype);
 	}
 
 	private void serve() {
-		this.dispatcherRegistry.serve();
+		this.dispatcherPrototype.serve();
 	}
 
 	public static void main(String[] args) {
