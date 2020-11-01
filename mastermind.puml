@@ -19,9 +19,11 @@ mastermind.MastermindStarter --> mastermind.views.MastermindView
 mastermind.MastermindStarter ..> mastermind.controllers.AcceptorController
 
 class mastermind.MastermindStandalone {
+    # createLogic(): Logic
+    # createView(): Logic
     + {static} main(): void
 }
 mastermind.MastermindStarter <|-- mastermind.MastermindStandalone
-mastermind.MastermindStarter ..> mastermind.controllers.implementation.LogicImplementation
+mastermind.MastermindStandalone ..> mastermind.controllers.implementation.LogicImplementation
 
 @enduml
