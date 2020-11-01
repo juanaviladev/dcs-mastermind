@@ -21,13 +21,13 @@ public class MastermindClient extends MastermindStarter {
     }
 
     @Override
-    protected void start() {
-        super.start();
+    protected void play() {
+        super.play();
         this.logicProxy.close();
     }
 
     public static void main(String[] args) {
-        new MastermindClient().start();
+        new MastermindClient().play();
     }
 
 }

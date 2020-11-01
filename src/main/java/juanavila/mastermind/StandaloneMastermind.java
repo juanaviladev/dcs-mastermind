@@ -18,6 +18,6 @@ public class StandaloneMastermind extends MastermindStarter {
     }
 
     public static void main(String[] args) {
-        new StandaloneMastermind().start();
+        new StandaloneMastermind().play();
     }
 }

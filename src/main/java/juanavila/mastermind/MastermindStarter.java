@@ -17,7 +17,7 @@ public abstract class MastermindStarter {
     protected abstract Logic createLogic();
     protected abstract MastermindView createView();
 
-    protected void start() {
+    protected void play() {
         AcceptorController controller;
         do {
             controller = this.logic.getController();
