@@ -452,9 +452,33 @@ mastermind.MastermindStarter --> mastermind.views.MastermindView
 mastermind.MastermindStarter ..> mastermind.controllers.AcceptorController
 
 class mastermind.MastermindStandalone {
+    # createLogic(): Logic
+    # createView(): Logic
     + {static} main(): void
 }
 mastermind.MastermindStarter <|-- mastermind.MastermindStandalone
-mastermind.MastermindStarter ..> mastermind.controllers.implementation.LogicImplementation
+mastermind.MastermindStandalone ..> mastermind.controllers.implementation.LogicImplementation
+
+class mastermind.distributed.MastermindClient {
+    - logic: LogicProxy
+    # createLogic(): Logic
+    # createView(): Logic
+    # play(): void
+    + {static} main(): void
+}
+mastermind.MastermindStarter <|-- mastermind.distributed.MastermindClient
+mastermind.distributed.MastermindClient *--> mastermind.distributed.LogicProxy
+mastermind.distributed.MastermindClient *--> mastermind.views.console.View
+
+class mastermind.distributed.MastermindServer {
+    - dispatcherPrototype: DispatcherPrototype
+    - logic: LogicServer
+    # createLogic(): Logic
+    # createView(): Logic
+    # play(): void
+    + {static} main(): void
+}
+mastermind.distributed.MastermindServer *--> mastermind.distributed.LogicServer
+mastermind.distributed.MastermindServer *--> mastermind.distributed.dispatchers.DispatcherPrototype
 
 @enduml
