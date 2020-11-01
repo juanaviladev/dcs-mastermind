@@ -12,9 +12,11 @@ mastermind.distributed.SessionProxy --> mastermind.distributed.dispatchers.Remot
 
 class mastermind.distributed.StartControllerProxy {
     - tcpip: RemoteConnection
+    + start(): void
 }
 mastermind.controllers.StartController <|-- mastermind.distributed.StartControllerProxy
 mastermind.distributed.StartControllerProxy ..> mastermind.distributed.dispatchers.FrameType
+mastermind.distributed.StartControllerProxy --> mastermind.distributed.dispatchers.RemoteConnection
 
 class mastermind.distributed.PlayControllerProxy {
     - tcpip: RemoteConnection

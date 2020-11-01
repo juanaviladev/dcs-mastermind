@@ -103,11 +103,10 @@ mastermind.controllers.StartController ..> mastermind.controllers.ControllerVisi
 class mastermind.controllers.implementation.StartControllerImplementation {
     - session: InMemorySession
    ~ StartControllerImplementation()
-   + accept(ControllerVisitor) : void
    + start(): void
 }
 mastermind.controllers.StartController <|-- mastermind.controllers.implementation.StartControllerImplementation
-mastermind.controllers.StartController --> mastermind.models.InMemorySession
+mastermind.controllers.implementation.StartControllerImplementation --> mastermind.models.InMemorySession
 
 abstract class mastermind.controllers.Logic {
     - session: Session

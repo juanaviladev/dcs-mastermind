@@ -1,11 +1,10 @@
 package juanavila.mastermind.distributed;
 
-import juanavila.mastermind.controllers.ControllerVisitor;
 import juanavila.mastermind.controllers.StartController;
 import juanavila.mastermind.distributed.dispatchers.FrameType;
 import juanavila.mastermind.distributed.dispatchers.RemoteConnection;
 
-public class StartControllerProxy implements StartController {
+public class StartControllerProxy extends StartController {
 
     private RemoteConnection connection;
 
@@ -16,10 +15,5 @@ public class StartControllerProxy implements StartController {
     @Override
     public void start() {
         this.connection.send(FrameType.START);
-    }
-
-    @Override
-    public void accept(ControllerVisitor controllerVisitor) {
-        controllerVisitor.visit(this);
     }
 }
