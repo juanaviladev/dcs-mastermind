@@ -32,8 +32,7 @@ class mastermind.distributed.PlayControllerProxy {
     + isLooser(): boolean
 }
 mastermind.distributed.PlayControllerProxy --> mastermind.distributed.dispatchers.RemoteConnection
-mastermind.controllers.AcceptorController <|.. mastermind.distributed.PlayControllerProxy
-mastermind.controllers.PlayController <|.. mastermind.distributed.PlayControllerProxy
+mastermind.controllers.PlayController <|-- mastermind.distributed.PlayControllerProxy
 mastermind.distributed.PlayControllerProxy ..> mastermind.distributed.dispatchers.FrameType
 
 class mastermind.distributed.ResumeControllerProxy {

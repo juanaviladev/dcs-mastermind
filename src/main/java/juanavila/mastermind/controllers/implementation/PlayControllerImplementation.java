@@ -5,7 +5,7 @@ import juanavila.mastermind.models.InMemorySession;
 import juanavila.mastermind.models.ProposedCombination;
 import juanavila.mastermind.models.Result;
 
-public class PlayControllerImplementation implements PlayController {
+public class PlayControllerImplementation extends PlayController {
 
     private ProposalController proposalController;
     private UndoController undoController;
@@ -55,11 +55,6 @@ public class PlayControllerImplementation implements PlayController {
 
     public boolean isWinner() {
         return this.proposalController.isWinner();
-    }
-
-    @Override
-    public void accept(ControllerVisitor controllerVisitor) {
-        controllerVisitor.visit(this);
     }
 
     public boolean isLooser() {

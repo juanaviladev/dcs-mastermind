@@ -1,13 +1,12 @@
 package juanavila.mastermind.distributed;
 
-import juanavila.mastermind.controllers.ControllerVisitor;
 import juanavila.mastermind.controllers.PlayController;
 import juanavila.mastermind.distributed.dispatchers.FrameType;
 import juanavila.mastermind.distributed.dispatchers.RemoteConnection;
 import juanavila.mastermind.models.ProposedCombination;
 import juanavila.mastermind.models.Result;
 
-public class PlayControllerProxy implements PlayController {
+public class PlayControllerProxy extends PlayController {
 
     private RemoteConnection connection;
 
@@ -79,10 +78,5 @@ public class PlayControllerProxy implements PlayController {
     public boolean isLooser() {
         this.connection.send(FrameType.IS_LOOSER);
         return this.connection.receiveBoolean();
-    }
-
-    @Override
-    public void accept(ControllerVisitor controllerVisitor) {
-        controllerVisitor.visit(this);
     }
 }

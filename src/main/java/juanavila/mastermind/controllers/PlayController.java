@@ -3,28 +3,32 @@ package juanavila.mastermind.controllers;
 import juanavila.mastermind.models.ProposedCombination;
 import juanavila.mastermind.models.Result;
 
-public interface PlayController extends AcceptorController {
+public abstract class PlayController implements AcceptorController {
 
-    void undo();
+    public abstract void undo();
 
-    boolean isUndoable();
+    public abstract boolean isUndoable();
 
-    void redo();
+    public abstract void redo();
 
-    boolean isRedoable();
+    public abstract boolean isRedoable();
 
-    boolean isFinished();
+    public abstract boolean isFinished();
 
-    void addProposedCombination(ProposedCombination proposedCombination);
+    public abstract void addProposedCombination(ProposedCombination proposedCombination);
 
-    int getAttempts();
+    public abstract int getAttempts();
 
-    ProposedCombination getProposedCombination(int pos);
+    public abstract ProposedCombination getProposedCombination(int pos);
 
-    Result getResult(int pos);
+    public abstract Result getResult(int pos);
 
-    boolean isWinner();
+    public abstract boolean isWinner();
 
-    boolean isLooser();
+    public abstract boolean isLooser();
 
+    @Override
+    public void accept(ControllerVisitor controllerVisitor) {
+        controllerVisitor.visit(this);
+    }
 }
