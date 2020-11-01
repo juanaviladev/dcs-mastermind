@@ -1,0 +1,49 @@
+@startuml
+
+top to bottom direction
+
+interface mastermind.models.Session {
+    + Session()
+    + {abstract} getValueState(): StateValue
+}
+mastermind.models.Session *--> mastermind.models.StateValue
+
+class mastermind.models.InMemorySession {
+    - mastermind: Mastermind
+    - registry: GameRegistry
+    - state: State
+    + InMemorySession()
+    + getValueState(): StateValue
+}
+mastermind.models.InMemorySession *--> mastermind.models.Mastermind
+mastermind.models.InMemorySession *--> mastermind.models.GameRegistry
+mastermind.models.InMemorySession *--> mastermind.models.State
+
+class mastermind.models.GameRegistry {
+   - mementos: List<GameMemento>
+   - mastermind: Mastermind
+   - actualIndex: int
+   ~ GameRegistry(Mastermind)
+   ~ register(): void
+   ~ undo(): void
+   ~ redo(): void
+   ~ isUndoable(): boolean
+   ~ isRedoable(): boolean
+}
+mastermind.models.GameRegistry *--> mastermind.models.GameMemento
+mastermind.models.GameRegistry --> mastermind.models.Mastermind
+
+class mastermind.models.Mastermind {
+   ~ createMemento(): GameMemento
+   ~ restore(GameMemento): void
+}
+mastermind.models.Mastermind ..> mastermind.models.GameMemento
+
+class mastermind.models.GameMemento {
+   - proposedCombinations: List<ProposedCombination>
+   - results: List<Result>
+   - attempts: int
+   ~ GameMemento(proposedCombinations, results, attempts)
+}
+
+@enduml

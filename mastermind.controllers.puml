@@ -1,0 +1,122 @@
+@startuml
+
+top to bottom direction
+
+interface mastermind.controllers.AcceptorController {
+    + {abstract} accept(ControllerVisitor) : void
+}
+interface mastermind.controllers.ControllerVisitor {
+     + {abstract} visit(StartController) : void
+     + {abstract} visit(PlayController) : void
+     + {abstract} visit(ResumeController) : void
+}
+
+class mastermind.controllers.RedoController {
+    + RedoController(InMemorySession)
+    ~ redo(): void
+    ~ isRedoable(): boolean
+}
+mastermind.controllers.RedoController ..> mastermind.models.InMemorySession
+
+class mastermind.controllers.UndoController {
+    + UndoController(InMemorySession)
+    ~ undo(): void
+    ~ isUndoable(): boolean
+}
+mastermind.controllers.UndoController ..> mastermind.models.InMemorySession
+
+class mastermind.controllers.ProposalController {
+    ~ ProposalController(InMemorySession)
+    ~ getAttempts() : int
+    ~ addProposedCombination() : void
+    ~ isWinner() : boolean
+    ~ isLooser() : boolean
+    ~ isFinished() : boolean
+    ~ getProposedCombination(pos: int) : ProposedCombination
+    ~ getResult(pos: int) : Result
+}
+mastermind.controllers.ProposalController --> mastermind.models.InMemorySession
+
+interface mastermind.controllers.PlayController {
+    + {abstract} undo(): void
+    + {abstract} isUndoable(): boolean
+    + {abstract} redo(): void
+    + {abstract} isRedoable(): boolean
+    + {abstract} isFinished(): boolean
+    + {abstract} addProposedCombination(ProposedCombination): void
+    + {abstract} getAttempts(): int
+    + {abstract} getProposedCombination(pos): ProposedCombination
+    + {abstract} getResult(pos): Result
+    + {abstract} isWinner(): boolean
+    + {abstract} isLooser(): boolean
+}
+mastermind.controllers.AcceptorController <|.. mastermind.controllers.PlayController
+
+class mastermind.controllers.implementation.PlayControllerImplementation {
+    - session: InMemorySession
+    - proposalController: ProposalController
+    - redoController: RedoController
+    - undoController: UndoController
+    + PlayControllerImplementation(InMemorySession)
+    + undo(): void
+    + isUndoable(): boolean
+    + redo(): void
+    + isRedoable(): boolean
+    + isFinished(): boolean
+    + addProposedCombination(ProposedCombination): void
+    + getAttempts(): int
+    + getProposedCombination(pos): ProposedCombination
+    + getResult(pos): Result
+    + isWinner(): boolean
+    + isLooser(): boolean
+}
+mastermind.controllers.PlayController <|.. mastermind.controllers.implementation.PlayControllerImplementation
+mastermind.controllers.implementation.PlayControllerImplementation --> mastermind.models.InMemorySession
+mastermind.controllers.implementation.PlayControllerImplementation *--> mastermind.controllers.ProposalController
+mastermind.controllers.implementation.PlayControllerImplementation *--> mastermind.controllers.UndoController
+mastermind.controllers.implementation.PlayControllerImplementation *--> mastermind.controllers.RedoController
+
+interface mastermind.controllers.ResumeController {
+   ~ ResumeController()
+   + {abstract} resume(newGame): void
+   + accept(ControllerVisitor) : void
+}
+mastermind.controllers.AcceptorController <|.. mastermind.controllers.ResumeController
+mastermind.controllers.ResumeController ..> mastermind.controllers.ControllerVisitor
+
+class mastermind.controllers.implementation.ResumeControllerImplementation {
+    - session: InMemorySession
+    ~ ResumeControllerImplementation(InMemorySession)
+    + accept(ControllerVisitor) : void
+    + start(): void
+ }
+mastermind.controllers.ResumeController <|.. mastermind.controllers.implementation.ResumeControllerImplementation
+mastermind.controllers.implementation.ResumeControllerImplementation *--> mastermind.models.InMemorySession
+
+interface mastermind.controllers.StartController {
+   ~ StartController()
+   + accept(ControllerVisitor) : void
+   + {abstract} start(): void
+}
+mastermind.controllers.AcceptorController <|.. mastermind.controllers.StartController
+mastermind.controllers.StartController ..> mastermind.controllers.ControllerVisitor
+
+abstract class mastermind.controllers.Logic {
+    - session: Session
+    - controllers: Map<StateValue, AcceptorController>
+    # Logic()
+    + getController(): AcceptorController
+}
+mastermind.controllers.Logic ..> mastermind.controllers.AcceptorController
+mastermind.controllers.Logic ..> mastermind.models.Session
+
+class mastermind.controllers.implementation.LogicImplementation {
+    # LogicImplementation()
+}
+mastermind.controllers.Logic <|-- mastermind.controllers.implementation.LogicImplementation
+mastermind.controllers.implementation.LogicImplementation *--> mastermind.controllers.implementation.PlayControllerImplementation
+mastermind.controllers.implementation.LogicImplementation *--> mastermind.controllers.implementation.StartControllerImplementation
+mastermind.controllers.implementation.LogicImplementation *--> mastermind.controllers.implementation.ResumeControllerImplementation
+mastermind.controllers.implementation.LogicImplementation ..> mastermind.models.StateValue
+
+@enduml
