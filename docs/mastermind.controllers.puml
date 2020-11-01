@@ -1,0 +1,54 @@
+@startuml
+
+top to bottom direction
+
+abstract class mastermind.controllers.Controller {
+    - state : State
+    # game : Mastermind
+    # reset() : void
+    # next() : void
+    + {abstract} control() : void
+}
+
+class mastermind.controllers.ProposalController {
+    ~ ProposalController(Mastermind, State)
+    + control() : void
+}
+mastermind.controllers.Controller <|-- mastermind.controllers.ProposalController
+mastermind.controllers.ProposalController *--> mastermind.views.ProposalView
+mastermind.controllers.ProposalController ---> mastermind.models.Mastermind
+mastermind.controllers.ProposalController ---> mastermind.models.State
+mastermind.controllers.ProposalController ..> mastermind.models.ProposedCombination
+mastermind.controllers.ProposalController ..> mastermind.views.ErrorView
+mastermind.controllers.ProposalController ..> mastermind.views.ResultView
+mastermind.controllers.ProposalController ..> mastermind.views.ProposedCombinationView
+
+class mastermind.controllers.ResumeController {
+    ~ ProposalController(Mastermind, State)
+    + control() : void
+}
+mastermind.controllers.Controller <|-- mastermind.controllers.ResumeController
+mastermind.controllers.ResumeController ..> mastermind.views.ResumeView
+
+class mastermind.controllers.StartController {
+    ~ StartController(Mastermind, State)
+    + control() : void
+}
+mastermind.controllers.Controller <|-- mastermind.controllers.StartController
+mastermind.controllers.StartController ..> mastermind.views.StartView
+mastermind.controllers.StartController ..> mastermind.views.SecretCombinationView
+
+class mastermind.controllers.Logic {
+    - game: Mastermind
+    - state: State
+    - controllers: Map<StateValue, Controller>
+    # Logic()
+    + getController(): Controller
+}
+mastermind.controllers.Logic *--> mastermind.controllers.StartController
+mastermind.controllers.Logic *--> mastermind.controllers.ProposalController
+mastermind.controllers.Logic *--> mastermind.controllers.ResumeController
+mastermind.controllers.Logic *--> mastermind.models.Mastermind
+mastermind.controllers.Logic *--> mastermind.models.State
+
+@enduml

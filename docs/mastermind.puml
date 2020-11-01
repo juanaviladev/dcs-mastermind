@@ -1,0 +1,16 @@
+@startuml
+
+top to bottom direction
+
+!include mastermind.controllers.puml
+!include mastermind.models.puml
+!include mastermind.views.puml
+
+class mastermind.MastermindStarter {
+    + play(): void
+    + {static} main(): void
+}
+mastermind.MastermindStarter *--> mastermind.controllers.Logic
+mastermind.MastermindStarter ..> mastermind.controllers.Controller
+
+@enduml
