@@ -40,6 +40,7 @@ class mastermind.distributed.ResumeControllerProxy {
 }
 mastermind.controllers.ResumeController <|-- mastermind.distributed.ResumeControllerProxy
 mastermind.distributed.ResumeControllerProxy ..> mastermind.distributed.dispatchers.FrameType
+mastermind.distributed.ResumeControllerProxy --> mastermind.distributed.dispatchers.RemoteConnection
 
 class mastermind.distributed.dispatchers.RemoteConnection {
     - tcpip: TCPIP

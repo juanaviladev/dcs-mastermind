@@ -1,5 +1,11 @@
 package juanavila.mastermind.controllers;
 
-public interface ResumeController extends AcceptorController {
-    void resume(boolean newGame);
+public abstract class ResumeController implements AcceptorController {
+
+    public abstract void resume(boolean newGame);
+
+    @Override
+    public void accept(ControllerVisitor controllerVisitor) {
+        controllerVisitor.visit(this);
+    }
 }

@@ -87,7 +87,6 @@ mastermind.controllers.ResumeController ..> mastermind.controllers.ControllerVis
 class mastermind.controllers.implementation.ResumeControllerImplementation {
     - session: InMemorySession
     ~ ResumeControllerImplementation(InMemorySession)
-    + accept(ControllerVisitor) : void
     + start(): void
  }
 mastermind.controllers.ResumeController <|-- mastermind.controllers.implementation.ResumeControllerImplementation
