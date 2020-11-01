@@ -2,7 +2,7 @@
 
 ## Diagrama de clases
 
-![Class diagram](/diagramaClases.png?raw=true "Class diagram")
+![Design diagram](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.github.com/juanaviladev/dcs-mastermind/mvp.pv/docs/all.puml)
 
 ## Autor
 Juan Antonio Ávila Catalán
