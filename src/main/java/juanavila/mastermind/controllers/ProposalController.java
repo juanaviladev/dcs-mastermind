@@ -1,45 +1,88 @@
 package juanavila.mastermind.controllers;
 
-import juanavila.mastermind.models.Mastermind;
-import juanavila.mastermind.models.ProposedCombination;
-import juanavila.mastermind.models.Result;
+import juanavila.mastermind.models.Error;
+import juanavila.mastermind.models.*;
+import juanavila.mastermind.views.*;
+
+import java.util.List;
 
 public class ProposalController extends Controller {
 
+	private ProposalView proposalView;
+
 	public ProposalController(Mastermind game, State state) {
 		super(game, state);
+		this.proposalView = new ProposalView();
 	}
 
 	@Override
-	public void accept(ControllerVisitor controllerVisitor) {
-		controllerVisitor.visit(this);
+	public void control() {
+		this.addProposedCombination(this.readProposal());
+		this.writeAttempts();
+		if(this.game.isFinished()) {
+			this.writeGameResult();
+		}
 	}
 
-	public int getAttempts() {
-    	return this.game.getAttempts();
-	}
-
-	public void addProposedCombination(ProposedCombination combination) {
+	private void addProposedCombination(ProposedCombination combination) {
 		this.game.addProposedCombination(combination);
 		if(this.game.isFinished()) {
 			next();
 		}
 	}
 
-	public boolean isWinner() {
-		return this.game.isWinner();
+	private void writeAttempts() {
+		proposalView.writeAttempts(game.getAttempts());
+		new SecretCombinationView().writeln(SecretCombination.getWidth());
+
+		for (int i = 0; i < game.getAttempts(); i++) {
+			List<Color> combinationColors = game.getProposedCombination(i).getColors();
+			new ProposedCombinationView().write(combinationColors);
+
+			Result result = game.getResult(i);
+			new ResultView().writeln(result.getBlacks(), result.getWhites());
+
+			proposalView.writeLineBreak();
+		}
 	}
 
-	public boolean isLooser() {
-		return this.game.isLooser();
+	private ProposedCombination readProposal() {
+		ProposedCombination proposedCombination = new ProposedCombination();
+		Error error;
+		do {
+			error = null;
+			this.proposalView.writeTitle();
+			String characters = this.proposalView.readProposal();
+			if (characters.length() > Combination.getWidth()) {
+				error = Error.WRONG_LENGTH;
+			} else {
+				for (int i = 0; i < characters.length(); i++) {
+					Color color = ColorView.getInstance(characters.charAt(i));
+					if (color == null) {
+						error = Error.WRONG_CHARACTERS;
+					} else {
+						if (proposedCombination.getColors().contains(color)) {
+							error = Error.DUPLICATED;
+						} else {
+							proposedCombination.getColors().add(color);
+						}
+					}
+				}
+			}
+			if (error != null) {
+				new ErrorView(error).writeln();
+				proposedCombination.getColors().clear();
+			}
+		} while (error != null);
+		return proposedCombination;
 	}
 
-	public ProposedCombination getProposedCombination(int position) {
-		return this.game.getProposedCombination(position);
-	}
-
-	public Result getResult(int position) {
-		return this.game.getResult(position);
+	private void writeGameResult() {
+		if (this.game.isWinner()) {
+			proposalView.writeWinner();
+		} else if (this.game.isLooser()) {
+			proposalView.writeLooser();
+		}
 	}
 
 }

@@ -1,6 +1,7 @@
 package juanavila.mastermind.controllers;
 
 import juanavila.mastermind.models.Mastermind;
+import juanavila.mastermind.models.State;
 import juanavila.mastermind.models.StateValue;
 
 import java.util.HashMap;

@@ -1,6 +1,4 @@
-package juanavila.mastermind.controllers;
-
-import juanavila.mastermind.models.StateValue;
+package juanavila.mastermind.models;
 
 public class State {
 

@@ -1,4 +1,4 @@
-package juanavila.mastermind.views.console;
+package juanavila.mastermind.views;
 
 import juanavila.mastermind.models.Color;
 import juanavila.utils.WithConsoleView;
@@ -21,7 +21,7 @@ public class ColorView extends WithConsoleView{
 		return result;
 	}
 
-	static Color getInstance(char character) {
+	public static Color getInstance(char character) {
 		for (int i = 0; i < ColorView.INITIALS.length; i++) {
 			if (ColorView.INITIALS[i] == character) {
 				return Color.values()[i];

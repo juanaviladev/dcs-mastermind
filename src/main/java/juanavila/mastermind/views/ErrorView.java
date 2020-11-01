@@ -1,4 +1,4 @@
-package juanavila.mastermind.views.console;
+package juanavila.mastermind.views;
 
 import juanavila.mastermind.models.Error;
 import juanavila.utils.WithConsoleView;
@@ -12,11 +12,11 @@ public class ErrorView extends WithConsoleView {
 
 	private Error error;
 
-	ErrorView(Error error) {
+	public ErrorView(Error error) {
 		this.error = error;
 	}
 	
-	void writeln() {
+	public void writeln() {
 		this.console.writeln(ErrorView.MESSAGES[this.error.ordinal()]);
 	}
 

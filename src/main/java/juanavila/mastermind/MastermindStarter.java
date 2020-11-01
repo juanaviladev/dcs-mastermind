@@ -2,28 +2,27 @@ package juanavila.mastermind;
 
 import juanavila.mastermind.controllers.Controller;
 import juanavila.mastermind.controllers.Logic;
-import juanavila.mastermind.views.MastermindView;
 
-public abstract class MastermindStarter {
+public class MastermindStarter {
 
     private Logic logic;
-    private MastermindView view;
 
     public MastermindStarter() {
         this.logic = new Logic();
-
-        this.view = createView(logic);
     }
 
-    void start() {
+    void play() {
         Controller controller;
         do {
             controller = this.logic.getController();
             if (controller != null) {
-                this.view.interact(controller);
+                controller.control();
             }
         } while (controller != null);
     }
 
-    abstract MastermindView createView(Logic logic);
+    public static void main(String[] args) {
+        new MastermindStarter().play();
+    }
+
 }

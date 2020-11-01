@@ -1,6 +1,8 @@
 package juanavila.mastermind.controllers;
 
 import juanavila.mastermind.models.Mastermind;
+import juanavila.mastermind.models.State;
+import juanavila.mastermind.views.ResumeView;
 
 public class ResumeController extends Controller {
 
@@ -9,11 +11,8 @@ public class ResumeController extends Controller {
     }
 
     @Override
-    public void accept(ControllerVisitor controllerVisitor) {
-        controllerVisitor.visit(this);
-    }
-
-    public void resume(boolean newGame) {
+    public void control() {
+        boolean newGame = new ResumeView().read();
         if (newGame) {
             this.game.clear();
             reset();

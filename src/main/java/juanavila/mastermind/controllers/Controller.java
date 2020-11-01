@@ -1,24 +1,26 @@
 package juanavila.mastermind.controllers;
 
 import juanavila.mastermind.models.Mastermind;
+import juanavila.mastermind.models.State;
 
 public abstract class Controller {
-    
+
     protected Mastermind game;
     private State state;
 
-	Controller(Mastermind game, State state) {
-		this.game = game;
-		this.state = state;
-  }
+    Controller(Mastermind game, State state) {
+        this.game = game;
+        this.state = state;
+    }
 
-    public void next() {
+    protected void next() {
         this.state.next();
     }
-    public void reset() {
+
+    protected void reset() {
         this.state.reset();
     }
 
-    public abstract void accept(ControllerVisitor controllerVisitor);
+    public abstract void control();
 
 }
