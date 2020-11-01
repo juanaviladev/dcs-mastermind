@@ -8,22 +8,48 @@ class mastermind.views.ColorView {
 mastermind.utils.WithConsoleView <|--- mastermind.views.ColorView
 
 class mastermind.views.SecretCombinationView {
-    ~ writeln(): void
+    + writeln(int): void
 }
 mastermind.utils.WithConsoleView <|--- mastermind.views.SecretCombinationView
 mastermind.views.SecretCombinationView ..> mastermind.views.MessageView
 
 class mastermind.views.ProposedCombinationView {
-    ~ ProposedCombinationView(combination: ProposedCombination)
-    ~ void write()
-    ~ void read()
+    + write(list) : void
 }
+mastermind.utils.WithConsoleView <|-- mastermind.views.ProposedCombinationView
+mastermind.views.ProposedCombinationView ..> mastermind.views.ColorView
+mastermind.views.ProposedCombinationView ..> mastermind.models.Color
 
 class mastermind.views.ProposalView {
-    + void writeAttempts(int)
-    + void writeWinner()
-    ~ void read()
+    + writeAttempts(int) : void
+    + writeWinner() : void
+    + writeLooser() : void
+    + writeTitle() : void
+    + readProposal() : String
+    + writeLineBreak() : void
 }
+mastermind.utils.WithConsoleView <|-- mastermind.views.ProposalView
+mastermind.views.ProposalView ..> mastermind.views.MessageView
+
+class mastermind.views.ResultView {
+    + writeln(int, int): void
+}
+mastermind.utils.WithConsoleView <|-- mastermind.views.ResultView
+mastermind.views.ResultView ..> mastermind.views.MessageView
+
+class mastermind.views.ResumeView {
+    + read() : boolean
+}
+mastermind.utils.WithConsoleView <|-- mastermind.views.ResumeView
+mastermind.views.ResumeView ..> mastermind.utils.YesNoDialog
+mastermind.views.ResumeView ..> mastermind.views.MessageView
+
+class mastermind.views.StartView {
+    + writeln(): void
+}
+mastermind.utils.WithConsoleView <|-- mastermind.views.StartView
+mastermind.views.StartView ..> mastermind.views.MessageView
+
 
 enum mastermind.views.MessageView {
     + ATTEMPTS
@@ -37,30 +63,5 @@ enum mastermind.views.MessageView {
     - message: String
     - MessageView(String)
 }
-
-class mastermind.views.PlayView {
-}
-mastermind.views.PlayView ..> mastermind.views.PlayMenu
-mastermind.views.PlayView ..> mastermind.views.BoardView
-
-class mastermind.views.ResultView {
-    ~ writeln(int): void
-}
-mastermind.utils.WithConsoleView <|-- mastermind.views.ResultView
-mastermind.views.ResultView ..> mastermind.views.MessageView
-
-class mastermind.views.ResumeView {
-}
-mastermind.views.ResumeView ..> mastermind.utils.YesNoDialog
-mastermind.views.ResumeView ..> mastermind.views.MessageView
-
-class mastermind.views.StartView {
-}
-mastermind.utils.WithConsoleView <|-- mastermind.views.StartView
-mastermind.views.StartView ..> mastermind.views.MessageView
-
-class mastermind.views.BoardView {
-}
-mastermind.views.BoardView ..> mastermind.views.ResultView
 
 @enduml
