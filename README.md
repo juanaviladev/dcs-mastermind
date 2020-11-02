@@ -3,9 +3,6 @@
 ## Diagramas de clases
 
 ### Vista general
-![Design diagram](docs/all.svg)
-
-### mastermind
 ![Design diagram](docs/mastermind.svg)
 
 ### mastermind.views
