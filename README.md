@@ -5,7 +5,7 @@ sobre el juego Mastermind.
 En cada rama se presenta un diagrama de diseño UML. Todos los diagramas han sido elaborados
 mediante la herramienta <a href="http://staruml.io/">StarUML<a/>.
 
-**En la rama _modelViewPresenter_ se encuentra la última versión disponible**
+**En la rama _mvp.pv_ se encuentra la última versión disponible**
 
 ## Modelo del dominio
 
