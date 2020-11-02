@@ -3,7 +3,7 @@ En este repositorio se encuentran separadas por ramas las distintas versiones de
 sobre el juego Mastermind.
 
 En cada rama se presenta un diagrama de diseño UML. Todos los diagramas han sido elaborados
-mediante la herramienta <a href="http://staruml.io/">StarUML<a/>.
+mediante la herramienta <a href="http://staruml.io/">StarUML<a/> y PlantUML.
 
 **En la rama _mvp.pv_ se encuentra la última versión disponible**
 
