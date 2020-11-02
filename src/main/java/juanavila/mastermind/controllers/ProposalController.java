@@ -17,17 +17,11 @@ public class ProposalController extends Controller {
 
 	@Override
 	public void control() {
-		this.addProposedCombination(this.readProposal());
+		this.game.addProposedCombination(this.readProposal());
 		this.writeAttempts();
 		if(this.game.isFinished()) {
 			this.writeGameResult();
-		}
-	}
-
-	private void addProposedCombination(ProposedCombination combination) {
-		this.game.addProposedCombination(combination);
-		if(this.game.isFinished()) {
-			next();
+			this.next();
 		}
 	}
 
