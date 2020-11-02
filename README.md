@@ -2,7 +2,7 @@
 
 ## Diagrama de clases
 
-![Design diagram](docs/all.png)
+![Design diagram](docs/classDiagram.svg)
 
 ## Autor
 Juan Antonio Ávila Catalán
