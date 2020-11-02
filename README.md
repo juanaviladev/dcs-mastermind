@@ -23,6 +23,10 @@ El diagrama del modelo del dominio utilizado es el proporcionado en el enunciado
 - [x] mvp.pm.withFacade
 - [x] mvp.pm.withoutDoubleDispatching
 - [x] mvp.pm.withDoubleDispatching
+- [x] mvp.pm.withComposite
+- [ ] mvp.pm.withoutProxy
+- [x] mvp.pm.withProxy
+- [x] mvp.pv
 
 ## Autor
 Juan Antonio Ávila Catalán
