@@ -1,7 +1,7 @@
 package juanavila.mastermind.controllers.implementation;
 
 import juanavila.mastermind.controllers.Logic;
-import juanavila.mastermind.models.InMemorySession;
+import juanavila.mastermind.models.SessionImplementation;
 import juanavila.mastermind.models.StateValue;
 
 public class LogicImplementation extends Logic {
@@ -13,7 +13,7 @@ public class LogicImplementation extends Logic {
     protected ResumeControllerImplementation resumeControllerImplementation;
 
     public LogicImplementation() {
-        InMemorySession session = new InMemorySession();
+        SessionImplementation session = new SessionImplementation();
 
         this.startControllerImplementation = new StartControllerImplementation(session);
         this.playControllerImplementation = new PlayControllerImplementation(session);

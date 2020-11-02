@@ -1,13 +1,13 @@
 package juanavila.mastermind.controllers.implementation;
 
 import juanavila.mastermind.controllers.StartController;
-import juanavila.mastermind.models.InMemorySession;
+import juanavila.mastermind.models.SessionImplementation;
 
 public class StartControllerImplementation extends StartController {
 
-    private InMemorySession session;
+    private SessionImplementation session;
 
-    public StartControllerImplementation(InMemorySession session) {
+    public StartControllerImplementation(SessionImplementation session) {
         this.session = session;
     }
 

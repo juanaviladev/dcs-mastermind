@@ -1,13 +1,13 @@
 package juanavila.mastermind.controllers.implementation;
 
 import juanavila.mastermind.controllers.ResumeController;
-import juanavila.mastermind.models.InMemorySession;
+import juanavila.mastermind.models.SessionImplementation;
 
 public class ResumeControllerImplementation extends ResumeController {
 
-    private InMemorySession session;
+    private SessionImplementation session;
 
-    public ResumeControllerImplementation(InMemorySession session) {
+    public ResumeControllerImplementation(SessionImplementation session) {
        this.session = session;
     }
 

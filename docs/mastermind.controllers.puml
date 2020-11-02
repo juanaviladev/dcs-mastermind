@@ -12,21 +12,21 @@ interface mastermind.controllers.ControllerVisitor {
 }
 
 class mastermind.controllers.RedoController {
-    + RedoController(InMemorySession)
+    + RedoController(SessionImplementation)
     ~ redo(): void
     ~ isRedoable(): boolean
 }
-mastermind.controllers.RedoController ..> mastermind.models.InMemorySession
+mastermind.controllers.RedoController ..> mastermind.models.SessionImplementation
 
 class mastermind.controllers.UndoController {
-    + UndoController(InMemorySession)
+    + UndoController(SessionImplementation)
     ~ undo(): void
     ~ isUndoable(): boolean
 }
-mastermind.controllers.UndoController ..> mastermind.models.InMemorySession
+mastermind.controllers.UndoController ..> mastermind.models.SessionImplementation
 
 class mastermind.controllers.ProposalController {
-    ~ ProposalController(InMemorySession)
+    ~ ProposalController(SessionImplementation)
     ~ getAttempts() : int
     ~ addProposedCombination() : void
     ~ isWinner() : boolean
@@ -35,7 +35,7 @@ class mastermind.controllers.ProposalController {
     ~ getProposedCombination(pos: int) : ProposedCombination
     ~ getResult(pos: int) : Result
 }
-mastermind.controllers.ProposalController --> mastermind.models.InMemorySession
+mastermind.controllers.ProposalController --> mastermind.models.SessionImplementation
 
 abstract class mastermind.controllers.PlayController {
     + {abstract} undo(): void
@@ -53,11 +53,11 @@ abstract class mastermind.controllers.PlayController {
 mastermind.controllers.AcceptorController <|.. mastermind.controllers.PlayController
 
 class mastermind.controllers.implementation.PlayControllerImplementation {
-    - session: InMemorySession
+    - session: SessionImplementation
     - proposalController: ProposalController
     - redoController: RedoController
     - undoController: UndoController
-    + PlayControllerImplementation(InMemorySession)
+    + PlayControllerImplementation(SessionImplementation)
     + undo(): void
     + isUndoable(): boolean
     + redo(): void
@@ -71,7 +71,7 @@ class mastermind.controllers.implementation.PlayControllerImplementation {
     + isLooser(): boolean
 }
 mastermind.controllers.PlayController <|-- mastermind.controllers.implementation.PlayControllerImplementation
-mastermind.controllers.implementation.PlayControllerImplementation --> mastermind.models.InMemorySession
+mastermind.controllers.implementation.PlayControllerImplementation --> mastermind.models.SessionImplementation
 mastermind.controllers.implementation.PlayControllerImplementation *--> mastermind.controllers.ProposalController
 mastermind.controllers.implementation.PlayControllerImplementation *--> mastermind.controllers.UndoController
 mastermind.controllers.implementation.PlayControllerImplementation *--> mastermind.controllers.RedoController
@@ -85,12 +85,12 @@ mastermind.controllers.AcceptorController <|.. mastermind.controllers.ResumeCont
 mastermind.controllers.ResumeController ..> mastermind.controllers.ControllerVisitor
 
 class mastermind.controllers.implementation.ResumeControllerImplementation {
-    - session: InMemorySession
-    ~ ResumeControllerImplementation(InMemorySession)
+    - session: SessionImplementation
+    ~ ResumeControllerImplementation(SessionImplementation)
     + start(): void
  }
 mastermind.controllers.ResumeController <|-- mastermind.controllers.implementation.ResumeControllerImplementation
-mastermind.controllers.implementation.ResumeControllerImplementation ---> mastermind.models.InMemorySession
+mastermind.controllers.implementation.ResumeControllerImplementation ---> mastermind.models.SessionImplementation
 
 abstract class mastermind.controllers.StartController {
    ~ StartController()
@@ -101,12 +101,12 @@ mastermind.controllers.AcceptorController <|.. mastermind.controllers.StartContr
 mastermind.controllers.StartController ..> mastermind.controllers.ControllerVisitor
 
 class mastermind.controllers.implementation.StartControllerImplementation {
-    - session: InMemorySession
+    - session: SessionImplementation
    ~ StartControllerImplementation()
    + start(): void
 }
 mastermind.controllers.StartController <|-- mastermind.controllers.implementation.StartControllerImplementation
-mastermind.controllers.implementation.StartControllerImplementation --> mastermind.models.InMemorySession
+mastermind.controllers.implementation.StartControllerImplementation --> mastermind.models.SessionImplementation
 
 abstract class mastermind.controllers.Logic {
     - session: Session

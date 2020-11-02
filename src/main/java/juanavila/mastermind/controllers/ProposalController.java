@@ -4,9 +4,9 @@ import juanavila.mastermind.models.*;
 
 public class ProposalController {
 
-	private InMemorySession session;
+	private SessionImplementation session;
 
-	public ProposalController(InMemorySession session) {
+	public ProposalController(SessionImplementation session) {
 		this.session = session;
 	}
 

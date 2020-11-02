@@ -1,12 +1,12 @@
 package juanavila.mastermind.controllers;
 
-import juanavila.mastermind.models.InMemorySession;
+import juanavila.mastermind.models.SessionImplementation;
 
 public class UndoController {
 
-    private InMemorySession session;
+    private SessionImplementation session;
 
-    public UndoController(InMemorySession session) {
+    public UndoController(SessionImplementation session) {
         this.session = session;
     }
 

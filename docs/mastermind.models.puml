@@ -8,16 +8,16 @@ interface mastermind.models.Session {
 }
 mastermind.models.Session *--> mastermind.models.StateValue
 
-class mastermind.models.InMemorySession {
+class mastermind.models.SessionImplementation {
     - mastermind: Mastermind
     - registry: GameRegistry
     - state: State
-    + InMemorySession()
+    + SessionImplementation()
     + getValueState(): StateValue
 }
-mastermind.models.InMemorySession *--> mastermind.models.Mastermind
-mastermind.models.InMemorySession *--> mastermind.models.GameRegistry
-mastermind.models.InMemorySession *--> mastermind.models.State
+mastermind.models.SessionImplementation *--> mastermind.models.Mastermind
+mastermind.models.SessionImplementation *--> mastermind.models.GameRegistry
+mastermind.models.SessionImplementation *--> mastermind.models.State
 
 class mastermind.models.GameRegistry {
    - mementos: List<GameMemento>

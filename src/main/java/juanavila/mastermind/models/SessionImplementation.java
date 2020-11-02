@@ -1,12 +1,12 @@
 package juanavila.mastermind.models;
 
-public class InMemorySession implements Session {
+public class SessionImplementation implements Session {
 
     private State state;
     private Mastermind mastermind;
     private GameRegistry registry;
 
-    public InMemorySession() {
+    public SessionImplementation() {
         this.state = new State();
         this.mastermind = new Mastermind();
         this.reset();

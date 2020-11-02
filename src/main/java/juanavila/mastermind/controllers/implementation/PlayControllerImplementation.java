@@ -1,7 +1,7 @@
 package juanavila.mastermind.controllers.implementation;
 
 import juanavila.mastermind.controllers.*;
-import juanavila.mastermind.models.InMemorySession;
+import juanavila.mastermind.models.SessionImplementation;
 import juanavila.mastermind.models.ProposedCombination;
 import juanavila.mastermind.models.Result;
 
@@ -11,7 +11,7 @@ public class PlayControllerImplementation extends PlayController {
     private UndoController undoController;
     private RedoController redoController;
 
-    public PlayControllerImplementation(InMemorySession session) {
+    public PlayControllerImplementation(SessionImplementation session) {
         this.proposalController = new ProposalController(session);
         this.undoController = new UndoController(session);
         this.redoController = new RedoController(session);
