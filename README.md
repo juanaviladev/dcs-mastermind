@@ -1,8 +1,24 @@
 # mvp.pm.withProxy
 
-## Diagrama de clases
+## Diagramas de clases
 
-![Design diagram](docs/all.png)
+### Vista general
+![Design diagram](docs/all.svg)
+
+### mastermind
+![Design diagram](docs/mastermind.svg)
+
+### mastermind.views
+![Design diagram](docs/mastermind.views.svg)
+
+### mastermind.controllers
+![Design diagram](docs/mastermind.controllers.svg)
+
+### mastermind.distributed
+![Design diagram](docs/mastermind.distributed.svg)
+
+### mastermind.models
+![Design diagram](docs/mastermind.models.svg)
 
 ## Autor
 Juan Antonio Ávila Catalán
