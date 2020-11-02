@@ -15,6 +15,7 @@ class mastermind.models.SessionImplementation {
     + SessionImplementation()
     + getValueState(): StateValue
 }
+mastermind.models.Session <|.. mastermind.models.SessionImplementation
 mastermind.models.SessionImplementation *--> mastermind.models.Mastermind
 mastermind.models.SessionImplementation *--> mastermind.models.GameRegistry
 mastermind.models.SessionImplementation *--> mastermind.models.State
